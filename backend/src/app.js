@@ -49,21 +49,6 @@ MongoClient.connect('mongodb://' + credentials + domain + ':' + port + '/')
     const db = dbo.db(databaseName);
     await initDb(db); //run initialization function
 
-    await db.collection('salesmen').createIndex(
-      {"sid": 1},
-      {unique: true},
-      (err, result) => {
-        if (err) console.log("could not set unique index");
-        else console.log(`${result} is successfully set to unique index`);
-      });
-
-    await db.collection('evaluationRecords').createIndex(
-      {"sid": 1, "year": 1},
-      {unique: true},
-      (err, result) => {
-        if (err) console.log("could not set unique index");
-        else console.log(`${result} is successfully set to unique index`);
-      });
     app.set('db', db); //register database in the express app
 
     app.listen(8080, () => { //start webserver, after database-connection was established
@@ -82,5 +67,12 @@ async function initDb(db) {
     console.log('created admin user with password: ' + adminPassword);
   }
 
+  await db.collection('salesmen').createIndex(
+    {"sid": 1},
+    {unique: true},
+    (err, result) => {
+      if (err) console.log("could not set unique index");
+      else console.log(`${result} is successfully set to unique index`);
+    });
 }
 
