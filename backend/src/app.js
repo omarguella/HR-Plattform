@@ -25,12 +25,12 @@ app.use(express.urlencoded({extended: true})); //adds support url encoded bodies
 app.use(upload.array()); //adds support multipart/form-data bodies
 
 app.use(session({
-    secret: crypto.randomBytes(32).toString('hex'),
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: false
-    }
+  secret: crypto.randomBytes(32).toString('hex'),
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false
+  }
 }));
 
 const apiRouter = require('./routes/api-routes'); //get api-router from routes/api
@@ -39,29 +39,48 @@ app.use('/api', apiRouter); //mount api-router at path "/api"
 
 //preparing database credentials for establishing the connection:
 let credentials = '';
-if(username){
-    credentials = username+':'+password+'@';
+if (username) {
+  credentials = username + ':' + password + '@';
 }
 
-MongoClient.connect('mongodb://' + credentials + domain + ':' + port + '/').then(async dbo =>{ //connect to MongoDb
+MongoClient.connect('mongodb://' + credentials + domain + ':' + port + '/')
+  .then(async dbo => { //connect to MongoDb
 
     const db = dbo.db(databaseName);
     await initDb(db); //run initialization function
-    app.set('db',db); //register database in the express app
+
+    await db.collection('salesmen').createIndex(
+      {"sid": 1},
+      {unique: true},
+      (err, result) => {
+        if (err) console.log("could not set unique index");
+        else console.log(`${result} is successfully set to unique index`);
+      });
+
+    await db.collection('evaluationRecords').createIndex(
+      {"sid": 1, "year": 1},
+      {unique: true},
+      (err, result) => {
+        if (err) console.log("could not set unique index");
+        else console.log(`${result} is successfully set to unique index`);
+      });
+    app.set('db', db); //register database in the express app
 
     app.listen(8080, () => { //start webserver, after database-connection was established
-        console.log('Webserver started.');
+      console.log('Webserver started.');
     });
-});
+  });
 
-async function initDb(db){
-    if(await db.collection('users').count() < 1){ //if no user exists create admin user
-        const userService = require('./services/user-service');
-        const User = require("./models/User");
+async function initDb(db) {
+  if (await db.collection('users').count() < 1) { //if no user exists create admin user
+    const userService = require('./services/user-service');
+    const User = require("./models/User");
 
-        const adminPassword = crypto.randomBytes(8).toString('base64');
-        await userService.add(db, new User('admin', '', 'admin', '', adminPassword, true));
+    const adminPassword = crypto.randomBytes(8).toString('base64');
+    await userService.add(db, new User('admin', '', 'admin', '', adminPassword, true));
 
-        console.log('created admin user with password: '+adminPassword);
-    }
+    console.log('created admin user with password: ' + adminPassword);
+  }
+
 }
+
