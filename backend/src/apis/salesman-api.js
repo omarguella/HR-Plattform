@@ -71,7 +71,7 @@ exports.updateBySid = async function (req, res) {
 }
 
 /**
- * endpoint, which returns information about the user, which is currently authenticated
+ * endpoint, to delete salesman
  * @param req express request
  * @param res express response
  * @return {Promise<void>}
@@ -83,7 +83,6 @@ exports.deleteBySid = async function (req, res) {
   if (salesman != null) {
     await salesmanService.delete(db, sid);
     res.status(203).send("salesman is deleted");
-
   } else {
     res.send("salesman not found");
   }
