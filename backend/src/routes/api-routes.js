@@ -19,19 +19,26 @@ module.exports = router;
 
 
 const salesmanApi = require('../apis/salesman-api');
-router.post('/salesman', checkAuthorization(true), salesmanApi.create);
-router.get('/salesman', checkAuthorization(false),salesmanApi.getAll);
-router.get('/salesman/:sid', checkAuthorization(false),salesmanApi.getBySid);
-router.put('/salesman/:sid', checkAuthorization(false),salesmanApi.updateBySid);
-router.delete('/salesman/:sid', checkAuthorization(false),salesmanApi.deleteBySid);
+router.route("/salesman")
+    .get(checkAuthorization(false),salesmanApi.getAll)
+    .post(checkAuthorization(true), salesmanApi.create)
+router.route("/salesman/:sid")
+    .get(checkAuthorization(false),salesmanApi.getBySid)
+    .put(checkAuthorization(false),salesmanApi.updateBySid)
+    .delete(checkAuthorization(false),salesmanApi.deleteBySid)
+
+const socialRecordApi = require('../apis/socialRecord-api');
+router.route("/socialrecord")
+    .get(checkAuthorization(true),socialRecordApi.getAll)
+    .post(checkAuthorization(true), socialRecordApi.create)
+router.route("/socialrecord/:id")
+    .get(checkAuthorization(false), socialRecordApi.getById)
+    .put(checkAuthorization(true), socialRecordApi.update)
+    .delete(checkAuthorization(false),socialRecordApi.deleteById)
+router.route("/socialrecord/:sid/:year")
+    .get(checkAuthorization(false),socialRecordApi.getBySidAndYear)
+    .delete(checkAuthorization(false), socialRecordApi.deleteBySidAndYear)
 
 
-const evaluationRecordApi = require('../apis/evaluationRecord-api');
-router.post('/evaluationRecord', checkAuthorization(true), evaluationRecordApi.create);
-router.get('/evaluationRecord', checkAuthorization(false),evaluationRecordApi.getAll);
-router.get('/evaluationRecord/:sid', checkAuthorization(false),evaluationRecordApi.getBySid);
-router.get('/evaluationRecord/:sid/:year', checkAuthorization(false),evaluationRecordApi.getBySidAndYear);
-router.put('/evaluationRecord/:sid/:year', checkAuthorization(false),evaluationRecordApi.update);
-router.delete('/evaluationRecord/:sid', checkAuthorization(false),evaluationRecordApi.deleteAllBySid);
-router.delete('/evaluationRecord/:sid/:year', checkAuthorization(false),evaluationRecordApi.deleteBySidAndYear);
+
 

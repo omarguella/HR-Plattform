@@ -39,7 +39,10 @@ exports.getBySid = async function (req, res) {
  */
 exports.create = async function (req, res) {
     const db = req.app.get('db');
-    const newSalesman = req.body;
+    /* todo body validation */
+    const {sid, firstname, lastname, department} = req.body;
+    const newSalesman = new Salesman(sid, firstname, lastname, department);
+
     const _s = await salesmanService.getBySid(db, newSalesman.sid);
 
     if (_s !== null) {
@@ -61,13 +64,14 @@ exports.updateBySid = async function (req, res) {
     const db = req.app.get('db');
     const updatedValues = req.body;
 
-    try {
-        await salesmanService.update(db, sid, updatedValues);
-        res.send("salesman is updated");
-    } catch (error) {
-        res.status(400).send("something went wrong!");
+    const _s = await salesmanService.getBySid(db, sid);
+    if(!_s) {
+        res.status(404).send("there is no match for this SID");
+        return;
     }
 
+    await salesmanService.update(db, sid, updatedValues);
+    res.send("salesman is updated");
 }
 
 /**
