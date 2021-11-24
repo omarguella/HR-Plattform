@@ -10,7 +10,7 @@ const upload = multer();
 const app = express();
 const crypto = require('crypto');
 
-const mongodb = require('mongodb');
+const mongoose = require('mongoose');
 const MongoClient = mongodb.MongoClient;
 
 // MongoDB connection details:

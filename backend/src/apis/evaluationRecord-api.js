@@ -8,8 +8,8 @@ const EvaluationRecord = require("../models/evaluationRecord");
  * @return {Promise<void>}
  */
 exports.getAll = async function (req, res) {
-  const db = req.app.get('db');
-  res.json(await evaluationRecordService.get(db));
+    const db = req.app.get('db');
+    res.json(await evaluationRecordService.get(db));
 }
 
 /**
@@ -19,36 +19,40 @@ exports.getAll = async function (req, res) {
  * @return {Promise<void>}
  */
 exports.getBySid = async function (req, res) {
-  const db = req.app.get('db');
-  const sid = parseInt(req.params.sid);
-  const evaluationRecord = await evaluationRecordService.getBySid(db, sid);
+    const db = req.app.get('db');
+    const sid = parseInt(req.params.sid);
+    const evaluationRecords = await evaluationRecordService.getBySid(db, sid);
 
-  if (evaluationRecord == null) {
-    res.status(404).send();
-  } else {
-    res.json(evaluationRecord);
-  }
-
+    res.json(evaluationRecords);
 }
 
 /**
- * endpoint, which returns a unique evaluation record of unique salesman
+ * endpoint, which returns all evaluation records of one salesman from the same year
  * @param req express request
  * @param res express response
  * @return {Promise<void>}
  */
 exports.getBySidAndYear = async function (req, res) {
-  const db = req.app.get('db');
-  const sid = parseInt(req.params.sid);
-  const year = parseInt(req.params.sid);
-  const evaluationRecord = await evaluationRecordService.getBySidAndYear(db, sid, year);
+    const db = req.app.get('db');
+    const sid = parseInt(req.params.sid);
+    const year = parseInt(req.params.sid);
+    const evaluationRecords = await evaluationRecordService.getBySidAndYear(db, sid, year);
 
-  if (evaluationRecord == null) {
-    res.status(404).send();
-  } else {
-    res.json(evaluationRecord);
-  }
+    res.json(evaluationRecords);
+}
 
+/**
+ * endpoint, which returns all evaluation records of one salesman from the same year
+ * @param req express request
+ * @param res express response
+ * @return {Promise<void>}
+ */
+exports.getById = async function (req, res) {
+    const db = req.app.get('db');
+    const id = req.params.id
+    const evaluationRecords = await evaluationRecordService.getById(db, id);
+
+    res.json(evaluationRecords);
 }
 
 /**
@@ -58,23 +62,25 @@ exports.getBySidAndYear = async function (req, res) {
  * @return {Promise<void>}
  */
 exports.create = async function (req, res) {
-  const db = req.app.get('db');
-  const newEvaluationRecord = new EvaluationRecord(
-    parseInt(req.body.sid),
-    parseInt(req.body.year),
-    parseInt(req.body.targetValue),
-    parseInt(req.body.actualValue),
-    req.body.description
-  );
+    const db = req.app.get('db');
+    const newEvaluationRecord = new EvaluationRecord(
+        req.body.description,
+        parseInt(req.body.sid),
+        parseInt(req.body.year),
+        parseInt(req.body.targetValue),
+        parseInt(req.body.actualValue),
+        parseInt(req.body.bonus),
+        parseInt(req.body.comment),
+    );
 
-  const _s = await evaluationRecordService.getBySidAndYear(db, newEvaluationRecord.sid, newEvaluationRecord.year);
+    const _s = await evaluationRecordService.getBySidAndYear(db, newEvaluationRecord.sid, newEvaluationRecord.year);
 
-  if (_s !== null) {
-    res.status(400).send("An Evaluation Record with the same sid and year already exists");
-  } else {
-    const id = await evaluationRecordService.create(db, newEvaluationRecord);
-    res.status(201).send(`created new evaluationRecord with id: ${id}  `)
-  }
+    if (_s !== null) {
+        res.status(400).send("An Evaluation Record with the same sid and year already exists");
+    } else {
+        const id = await evaluationRecordService.create(db, newEvaluationRecord);
+        res.status(201).send(`created new evaluationRecord with id: ${id}  `)
+    }
 }
 
 /**
@@ -84,17 +90,15 @@ exports.create = async function (req, res) {
  * @return {Promise<void>}
  */
 exports.update = async function (req, res) {
-  const sid = parseInt(req.params.sid);
-  const year = parseInt(req.params.year);
-  const db = req.app.get('db');
-  const newEvaluationRecord = req.body;
-  try {
-    await evaluationRecordService.update(db, sid, year, newEvaluationRecord);
-    res.send("evaluationRecord is updated");
-  } catch (err) {
-    res.status(400).send()
-  }
-
+    const id = req.params.id;
+    const db = req.app.get('db');
+    const newEvaluationRecord = req.body;
+    try {
+        await evaluationRecordService.update(db, id, newEvaluationRecord);
+        res.send("evaluationRecord is updated");
+    } catch (err) {
+        res.status(400).send()
+    }
 }
 
 /**
@@ -104,33 +108,51 @@ exports.update = async function (req, res) {
  * @return {Promise<void>}
  */
 exports.deleteAllBySid = async function (req, res) {
-  const sid = parseInt(req.params.sid);
-  const db = req.app.get('db');
-  const evaluationRecord = await evaluationRecordService.getBySid(db, sid);
-  if (evaluationRecord != null) {
-    await evaluationRecordService.deleteAllBySid(db, sid);
-    res.status(203).send("salesman is deleted");
-  } else {
-    res.send("salesman not found");
-  }
+    const sid = parseInt(req.params.sid);
+    const db = req.app.get('db');
+    const evaluationRecord = await evaluationRecordService.getBySid(db, sid);
+    if (evaluationRecord != null) {
+        await evaluationRecordService.deleteAllBySid(db, sid);
+        res.status(203).send("salesman is deleted");
+    } else {
+        res.send("salesman not found");
+    }
 }
 
-
 /**
- * endpoint, to delete a unique evaluation record for the given SID
+ * endpoint, to delete all evaluation records for the given SID and year
  * @param req express request
  * @param res express response
  * @return {Promise<void>}
  */
 exports.deleteBySidAndYear = async function (req, res) {
-  const sid = parseInt(req.params.sid);
-  const year = parseInt(req.params.year);
-  const db = req.app.get('db');
-  const evaluationRecord = await evaluationRecordService.getBySidAndYear(db, sid, year);
-  if (evaluationRecord != null) {
-    await evaluationRecordService.deleteBySidAndYear(db, sid, year);
-    res.status(203).send("salesman is deleted");
-  } else {
-    res.send("salesman not found");
-  }
+    const sid = parseInt(req.params.sid);
+    const year = parseInt(req.params.year);
+    const db = req.app.get('db');
+    const evaluationRecord = await evaluationRecordService.getBySidAndYear(db, sid, year);
+    if (evaluationRecord != null) {
+        await evaluationRecordService.deleteBySidAndYear(db, sid, year);
+        res.status(203).send("salesman is deleted");
+    } else {
+        res.send("salesman not found");
+    }
+}
+
+/**
+ * endpoint, to delete unique evaluation record
+ * @param req express request
+ * @param res express response
+ * @return {Promise<void>}
+ */
+exports.deleteById = async function (req, res) {
+    const sid = parseInt(req.params.sid);
+    const year = parseInt(req.params.year);
+    const db = req.app.get('db');
+    const evaluationRecord = await evaluationRecordService.getById(db, sid, year);
+    if (evaluationRecord != null) {
+        await evaluationRecordService.deleteBySidAndYear(db, sid, year);
+        res.status(203).send("salesman is deleted");
+    } else {
+        res.send("salesman not found");
+    }
 }
