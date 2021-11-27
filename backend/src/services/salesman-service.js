@@ -4,7 +4,7 @@
  * @return {Promise<Salesman[]>}
  */
 exports.get = async function (db) {
-  return (await db.collection('salesmen').find().toArray());
+    return (await db.collection('salesmen').find().toArray());
 }
 
 /**
@@ -14,9 +14,9 @@ exports.get = async function (db) {
  * @return {Promise<Salesman>}
  */
 exports.getBySid = async function (db, sid) {
-  return (await db.collection('salesmen').findOne({
-    "sid": sid
-  }));
+    return (await db.collection('salesmen').findOne({
+        "sid": sid
+    }));
 }
 
 /**
@@ -26,7 +26,7 @@ exports.getBySid = async function (db, sid) {
  * @return {Promise<string>}
  */
 exports.create = async function (db, salesman) {
-  return (await db.collection('salesmen').insertOne(salesman)).insertedId; //return unique ID
+    return (await db.collection('salesmen').insertOne(salesman)).insertedId; //return unique ID
 }
 
 /**
@@ -38,17 +38,17 @@ exports.create = async function (db, salesman) {
  */
 exports.update = async function (db, sid, salesman) {
 
-  const filter = {
-    "sid": sid
-  };
-  const newValues = {$set: salesman};
+    const filter = {
+        "sid": sid
+    };
+    const newValues = {$set: salesman};
 
-  db.collection('salesmen').updateOne(
-    filter,
-    newValues,
-    function (err, res) {
-      if (err) throw err;
-    });
+    db.collection('salesmen').updateOne(
+        filter,
+        newValues,
+        function (err, res) {
+            if (err) throw err;
+        });
 }
 
 /**
@@ -59,10 +59,10 @@ exports.update = async function (db, sid, salesman) {
  */
 
 exports.delete = async function (db, sid) {
-  const filter = {
-    "sid": sid
-  };
-  db.collection('salesmen').deleteOne(filter);
+    const filter = {
+        "sid": sid
+    };
+    db.collection('salesmen').deleteOne(filter);
 
 }
 
