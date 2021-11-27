@@ -5,6 +5,8 @@
 const express = require('express');
 const session = require('express-session');
 
+const cors = require('cors');
+
 const multer = require('multer');
 const upload = multer();
 const app = express();
@@ -13,7 +15,7 @@ const crypto = require('crypto');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 
-const {checkUniqueIndex, setUniqueIndex} = require("./utils/helper");
+const {setUniqueIndex} = require("./utils/helper");
 
 // MongoDB connection details:
 const domain = 'localhost';
@@ -25,6 +27,10 @@ const databaseName = 'intArch';
 app.use(express.json()); //adds support for json encoded bodies
 app.use(express.urlencoded({extended: true})); //adds support url encoded bodies
 app.use(upload.array()); //adds support multipart/form-data bodies
+app.use(cors({
+    origin: "http://localhost:4200",
+    credentials: true,
+}))
 
 app.use(session({
     secret: crypto.randomBytes(32).toString('hex'),

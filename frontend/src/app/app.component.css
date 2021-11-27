@@ -1,6 +1,11 @@
 main{
   box-sizing: border-box;
   width: 100%;
-  margin-top: 70px;
-  padding: 25px;
+  min-height: calc(100vh - 64px);
+  margin-top: 64px;
+  display: grid;
+  position: relative;
 }
+
+
+

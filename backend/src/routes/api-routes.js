@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {checkAuthorization} = require('../middlewares/auth-middleware');
+const cors = require('cors')
 
 /*
     In this file is the routing for the REST-endpoints under /api managed
@@ -20,7 +21,7 @@ module.exports = router;
 
 const salesmanApi = require('../apis/salesman-api');
 router.route("/salesman")
-    .get(checkAuthorization(false),salesmanApi.getAll)
+    .get( checkAuthorization(false), salesmanApi.getAll)
     .post(checkAuthorization(true), salesmanApi.create)
 router.route("/salesman/:sid")
     .get(checkAuthorization(false),salesmanApi.getBySid)
@@ -38,7 +39,3 @@ router.route("/socialrecord/:id")
 router.route("/socialrecord/:sid/:year")
     .get(checkAuthorization(false),socialRecordApi.getBySidAndYear)
     .delete(checkAuthorization(false), socialRecordApi.deleteBySidAndYear)
-
-
-
-

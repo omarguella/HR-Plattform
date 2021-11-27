@@ -24,7 +24,7 @@ exports.getBySid = async function (req, res) {
     const salesman = await salesmanService.getBySid(db, sid);
 
     if (salesman == null) {
-        res.status(404).send();
+        res.status(404).json({message: 'Salesman not found'});
     } else {
         res.json(salesman);
     }
@@ -46,10 +46,10 @@ exports.create = async function (req, res) {
     const _s = await salesmanService.getBySid(db, newSalesman.sid);
 
     if (_s !== null) {
-        res.status(400).send("sid already exists");
+        res.status(400).json({message: 'Salesman already exists'});
     } else {
-        const id = await salesmanService.create(db, newSalesman);
-        res.status(201).send(`created new Salesman with id: ${id}`)
+        await salesmanService.create(db, newSalesman);
+        res.status(201).json(await salesmanService.getBySid(db, newSalesman.sid))
     }
 }
 
@@ -63,15 +63,16 @@ exports.updateBySid = async function (req, res) {
     const sid = parseInt(req.params.sid);
     const db = req.app.get('db');
     const updatedValues = req.body;
+    delete(updatedValues._id); // prevent updating the _id property
 
     const _s = await salesmanService.getBySid(db, sid);
     if(!_s) {
-        res.status(404).send("there is no match for this SID");
+        res.status(404).json({message: 'Salesman not found'});
         return;
     }
 
     await salesmanService.update(db, sid, updatedValues);
-    res.send("salesman is updated");
+    res.status(200).json(updatedValues)
 }
 
 /**
@@ -86,8 +87,8 @@ exports.deleteBySid = async function (req, res) {
     const salesman = await salesmanService.getBySid(db, sid);
     if (salesman != null) {
         await salesmanService.delete(db, sid);
-        res.status(200).send("salesman is deleted");
+        res.status(200).json(salesman);
     } else {
-        res.status(404).send("salesman not found");
+        res.status(404).json({message: 'Salesman not found'})
     }
 }

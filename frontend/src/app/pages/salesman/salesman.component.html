@@ -1,0 +1,143 @@
+<div class="card p-2 w-75">
+	<h3 class="title">SALESMEN</h3>
+	<div class="card-body">
+		<table mat-table [dataSource]="salesmen" class="mat-elevation-z8">
+			<ng-container matColumnDef="sid">
+				<th mat-header-cell *matHeaderCellDef> SID</th>
+				<td mat-cell *matCellDef="let element"> {{element.sid}} </td>
+			</ng-container>
+			<ng-container matColumnDef="firstname">
+				<th mat-header-cell *matHeaderCellDef> Firstname</th>
+				<td mat-cell *matCellDef="let element"> {{element.firstname}} </td>
+			</ng-container>
+			<ng-container matColumnDef="lastname">
+				<th mat-header-cell *matHeaderCellDef> Lastname</th>
+				<td mat-cell *matCellDef="let element"> {{element.lastname}} </td>
+			</ng-container>
+			<ng-container matColumnDef="department">
+				<th mat-header-cell *matHeaderCellDef> Department</th>
+				<td mat-cell *matCellDef="let element"> {{element.department}} </td>
+			</ng-container>
+			<ng-container matColumnDef="action">
+				<th mat-header-cell *matHeaderCellDef> Action</th>
+				<td mat-cell *matCellDef="let element">
+					<button (click)="handleEditClick(element)" mat-raised-button color="primary" class="actionBtn">EDIT</button>
+					<button (click)="handleDeleteClick(element)" mat-raised-button color="warn"
+									class="actionBtn">DELETE
+					</button>
+				</td>
+			</ng-container>
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		</table>
+		<div class="add-salesman">
+			<mat-form-field class="example-form-field" appearance="fill">
+				<mat-label>SID *</mat-label>
+				<input matInput type="number" [(ngModel)]="newSid">
+				<button *ngIf="newSid" matSuffix mat-icon-button aria-label="Clear" (click)="newSid=undefined">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+			<mat-form-field class="example-form-field" appearance="fill">
+				<mat-label>Firstname *</mat-label>
+				<input matInput type="text" [(ngModel)]="newFirstname">
+				<button *ngIf="newFirstname" matSuffix mat-icon-button aria-label="Clear" (click)="newFirstname=''">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+			<mat-form-field class="example-form-field" appearance="fill">
+				<mat-label>Lastname *</mat-label>
+				<input matInput type="text" [(ngModel)]="newLastname">
+				<button *ngIf="newLastname" matSuffix mat-icon-button aria-label="Clear" (click)="newLastname=''">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+			<mat-form-field class="example-form-field" appearance="fill">
+				<mat-label>Department</mat-label>
+				<input matInput type="text" [(ngModel)]="newDepartment">
+				<button *ngIf="newDepartment" matSuffix mat-icon-button aria-label="Clear" (click)="newDepartment=''">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+			<button class="btn btn-success add-salesman-btn" (click)="createSalesman()">Add Salesman</button>
+		</div>
+		<div
+			*ngIf="hasError"
+			class="alert alert-danger w-50 d-flex align-items-center"
+			role="alert"
+		>
+			<span class="material-icons mx-2">warning</span>
+			Please fill in the required properties (marked with *)
+		</div>
+	</div>
+</div>
+
+<div #deleteModal class="modal__container">
+	<div class="card deleteModal">
+		<h1>Confirmation Dialog</h1>
+		<mat-divider></mat-divider>
+		<div class="my-2">
+			<div>
+				Salesman with SID "{{activeSalesman && activeSalesman.sid}}" is going to be deleted permanently from the
+				database!
+				<strong>Do you want to continue?</strong>
+			</div>
+
+		</div>
+		<mat-divider></mat-divider>
+		<div class="modalBtn__container p-2">
+			<button (click)="showCloseDeleteModal();" mat-button color="primary">Cancel</button>
+			<button mat-button color="warn" (click)="deleteSalesman(activeSalesman.sid); showCloseDeleteModal();">Yes</button>
+		</div>
+
+	</div>
+</div>
+
+<div #updateModal class="modal__container">
+	<div class="card updateModal">
+		<h1>Confirmation Dialog</h1>
+		<mat-divider></mat-divider>
+		<div class="my-2">
+			<div>
+				<mat-form-field appearance="fill">
+					<mat-label>SID *</mat-label>
+					<input matInput type="number" [(ngModel)]="updatedValues && updatedValues.sid">
+				</mat-form-field>
+			</div>
+
+			<div>
+				<mat-form-field appearance="fill">
+					<mat-label>Firstname *</mat-label>
+					<input matInput type="text" [(ngModel)]="updatedValues && updatedValues.firstname">
+
+				</mat-form-field>
+				<mat-form-field appearance="fill" class="mx-2">
+					<mat-label>Lastname *</mat-label>
+					<input matInput type="text" [(ngModel)]="updatedValues && updatedValues.lastname">
+
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field appearance="fill">
+					<mat-label>Department</mat-label>
+					<input matInput type="text" [(ngModel)]="updatedValues && updatedValues.department">
+				</mat-form-field>
+			</div>
+
+
+		</div>
+		<mat-divider></mat-divider>
+		<div class="modalBtn__container">
+			<button (click)="showCloseUpdateModal();" mat-button color="warn">Cancel</button>
+			<button
+				mat-button
+				color="primary"
+				(click)="updateSalesman(this.activeSalesman.sid, this.updatedValues); showCloseUpdateModal();"
+			>
+				Save
+			</button>
+		</div>
+
+	</div>
+</div>
+
