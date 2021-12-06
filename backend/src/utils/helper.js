@@ -1,3 +1,5 @@
+const Product = require("../models/Product");
+
 async function setUniqueIndex(db, collection, field) {
     db.collection(collection).createIndex(
         {
@@ -22,4 +24,13 @@ async function checkUniqueIndex(db, collection, field) {
     return x !== undefined;
 }
 
-module.exports = {setUniqueIndex, checkUniqueIndex}
+async function createProductFromOpenCrx(openCrxData) {
+    const id = openCrxData.identity.split("/").at(-1);
+    const name = openCrxData.name;
+    const minPositions = openCrxData.minPositions;
+    const maxPositions = openCrxData.maxPositions;
+
+    return new Product(id, name, minPositions, maxPositions);
+}
+
+module.exports = {setUniqueIndex, checkUniqueIndex, createProductFromOpenCrx}
