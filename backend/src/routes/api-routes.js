@@ -39,3 +39,7 @@ router.route("/socialrecord/:id")
 router.route("/socialrecord/:sid/:year")
     .get(checkAuthorization(false),socialRecordApi.getBySidAndYear)
     .delete(checkAuthorization(false), socialRecordApi.deleteBySidAndYear)
+
+const productApi = require('../apis/product-api');
+router.get('/product', checkAuthorization(true), productApi.getAll);
+router.get('/product/:id', checkAuthorization(true), productApi.getById)
