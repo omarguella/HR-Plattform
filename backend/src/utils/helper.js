@@ -33,4 +33,8 @@ async function createProductFromOpenCrx(openCrxData) {
     return new Product(id, name, minPositions, maxPositions);
 }
 
+async function initializeEmployeeList() {
+    /* todo get Employee List from orangeHRM and save it in MongoDB */
+}
+
 module.exports = {setUniqueIndex, checkUniqueIndex, createProductFromOpenCrx}

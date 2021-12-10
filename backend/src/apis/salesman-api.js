@@ -40,8 +40,8 @@ exports.getBySid = async function (req, res) {
 exports.create = async function (req, res) {
     const db = req.app.get('db');
     /* todo body validation */
-    const {sid, firstname, lastname, department} = req.body;
-    const newSalesman = new Salesman(sid, firstname, lastname, department);
+    const {sid, code, firstname, lastname, department} = req.body;
+    const newSalesman = new Salesman(sid, code, firstname, lastname, department);
 
     const _s = await salesmanService.getBySid(db, newSalesman.sid);
 

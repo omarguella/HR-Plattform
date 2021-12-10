@@ -15,6 +15,8 @@ const crypto = require('crypto');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 
+
+const {synchronizeSalesmen} = require("./services/orange-hrm-service");
 const {setUniqueIndex} = require("./utils/helper");
 
 // MongoDB connection details:
@@ -41,7 +43,7 @@ app.use(session({
     }
 }));
 
-const apiRouter = require('./routes/api-routes'); //get api-router from routes/api
+const apiRouter = require('./routes/api-routes');//get api-router from routes/api
 app.use('/api', apiRouter); //mount api-router at path "/api"
 // !!!! attention all middlewares, mounted after the router wont be called for any requests
 
@@ -74,6 +76,8 @@ async function initDb(db) {
 
         console.log('created admin user with password: ' + adminPassword);
     }
+
+    await synchronizeSalesmen(db);
 
     await setUniqueIndex(db, "salesmen", "sid");
 
