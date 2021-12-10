@@ -42,4 +42,9 @@ router.route("/socialrecord/:sid/:year")
 
 const productApi = require('../apis/product-api');
 router.get('/product', checkAuthorization(true), productApi.getAll);
-router.get('/product/:id', checkAuthorization(true), productApi.getById)
+router.get('/product/:id', checkAuthorization(true), productApi.getById);
+
+const orangeHrmApi = require('../apis/orange-hrm-api');
+router.route('/orangehrm')
+	.get(checkAuthorization(true), orangeHrmApi.synchronize)
+	.post(checkAuthorization(true), orangeHrmApi.bonusSalary)

@@ -27,4 +27,8 @@ export class SalesmanService {
 	updateSalesman(sid: number, updatedValues: Salesman): Observable<Salesman> {
 		return this.http.put<Salesman>(`${ this.baseUrl }/${ sid }`, updatedValues, { observe: 'body', withCredentials: true });
 	}
+
+	synchronize(): Observable<void> {
+		return this.http.get<void>('/api/orangehrm', { withCredentials: true });
+	}
 }

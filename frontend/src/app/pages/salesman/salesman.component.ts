@@ -16,10 +16,11 @@ export class SalesmanComponent implements OnInit {
 	updatedValues: Salesman;
 
 	@ViewChild(MatTable) table: MatTable<Salesman>;
-	displayedColumns: string[] = [ 'sid', 'firstname', 'lastname', 'department', 'action' ];
+	displayedColumns: string[] = [ 'code', 'firstname', 'lastname', 'department', 'action' ];
 
 	// Fields to create a new Salesman
 	newSid: number;
+	newCode: number;
 	newFirstname: string;
 	newLastname: string;
 	newDepartment: string;
@@ -44,12 +45,12 @@ export class SalesmanComponent implements OnInit {
 	}
 
 	createSalesman(): Promise<void> {
-		if (!this.newSid || !this.newFirstname || !this.newLastname) {
+		if (!this.newSid || !this.newCode || !this.newFirstname || !this.newLastname) {
 			this.hasError = true;
 			return;
 		}
 
-		const _s = new Salesman(this.newSid, this.newFirstname, this.newLastname, this.newDepartment);
+		const _s = new Salesman(this.newSid, this.newCode, this.newFirstname, this.newLastname, this.newDepartment);
 		this.salesmanService
 			.createSalesman(_s)
 			.subscribe(() => {
@@ -71,14 +72,22 @@ export class SalesmanComponent implements OnInit {
 		this.salesmanService
 			.updateSalesman(sid, updatedValues)
 			.subscribe((data) => {
-				console.log(data);
 				this.salesmen = this.salesmen.map((s) => s.sid === sid ? data : s);
-				console.log(this.salesmen);
 			});
 	}
 
+	synchronizeSalesmen(): void {
+		this.salesmanService
+			.synchronize()
+			.subscribe(
+				() => {
+					window.location.reload();
+				}
+			);
+	}
+
 	resetFields(): void {
-		this.newSid = undefined;
+		this.newSid = this.newCode = undefined;
 		this.newFirstname = this.newLastname = this.newDepartment = '';
 		this.hasError = false;
 	}
