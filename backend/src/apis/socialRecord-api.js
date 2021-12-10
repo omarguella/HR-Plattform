@@ -2,14 +2,22 @@ const socialRecordService = require('../services/socialRecord-service');
 const SocialRecord = require("../models/SocialRecord");
 
 /**
- * endpoint, which returns all SocialRecords
+ * endpoint, which returns all SocialRecords (or all for one Salesman)
  * @param req express request
  * @param res express response
  * @return {Promise<void>}
  */
 exports.getAll = async function (req, res) {
+    const sid = parseInt(req.query.sid);
     const db = req.app.get('db');
-    res.json(await socialRecordService.get(db));
+    const result = await socialRecordService.get(db);
+
+    if (!sid) {
+        res.json(result);
+    } else {
+        res.json(result.filter((sr) => sr.sid === sid));
+    }
+
 }
 
 /**
@@ -150,8 +158,8 @@ exports.deleteById = async function (req, res) {
 
     if (_sr !== null) {
         console.log(await socialRecordService.deleteById(db, _id));
-        res.status(200).send("Social Record is deleted");
+        res.status(200).send({message: 'Social Record deleted'});
     } else {
-        res.status(404).send("Social Record not found");
+        res.status(404).send({message: 'Social Record not found'});
     }
 }

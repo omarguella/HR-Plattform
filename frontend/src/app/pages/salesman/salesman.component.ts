@@ -38,7 +38,7 @@ export class SalesmanComponent implements OnInit {
 
 	getSalesman(): void {
 		this.salesmanService
-			.getSalesman()
+			.getSalesmen()
 			.subscribe(data => {
 				this.salesmen = data;
 			});

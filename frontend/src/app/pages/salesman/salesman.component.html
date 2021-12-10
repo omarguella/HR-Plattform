@@ -1,7 +1,7 @@
 <div class="card p-2 w-75">
 	<div class="card-header d-flex justify-content-between align-items-center">
 		<h3 class="title">SALESMEN</h3>
-		<button class="btn btn-info" (click)="synchronizeSalesmen()">Snychronize</button>
+		<button mat-raised-button (click)="synchronizeSalesmen()">Snychronize</button>
 	</div>
 	<div class="card-body">
 		<table mat-table [dataSource]="salesmen" class="mat-elevation-z8">
@@ -28,48 +28,51 @@
 					<button (click)="handleDeleteClick(element)" mat-raised-button color="warn"
 									class="actionBtn">DELETE
 					</button>
+					<button routerLink="/socialrecord/{{element.sid}}" mat-raised-button color="accent"
+									class="actionBtn">Social Records
+					</button>
 				</td>
 			</ng-container>
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 		</table>
 		<div class="add-salesman">
-			<mat-form-field class="example-form-field" appearance="fill">
+			<mat-form-field class="example-form-field" >
 				<mat-label>SID *</mat-label>
 				<input matInput type="number" [(ngModel)]="newSid">
 				<button *ngIf="newSid" matSuffix mat-icon-button aria-label="Clear" (click)="newSid=undefined">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
-			<mat-form-field class="example-form-field" appearance="fill">
+			<mat-form-field class="example-form-field" >
 				<mat-label>Code *</mat-label>
 				<input matInput type="number" [(ngModel)]="newCode">
 				<button *ngIf="newCode" matSuffix mat-icon-button aria-label="Clear" (click)="newCode=undefined">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
-			<mat-form-field class="example-form-field" appearance="fill">
+			<mat-form-field class="example-form-field" >
 				<mat-label>Firstname *</mat-label>
 				<input matInput type="text" [(ngModel)]="newFirstname">
 				<button *ngIf="newFirstname" matSuffix mat-icon-button aria-label="Clear" (click)="newFirstname=''">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
-			<mat-form-field class="example-form-field" appearance="fill">
+			<mat-form-field class="example-form-field" >
 				<mat-label>Lastname *</mat-label>
 				<input matInput type="text" [(ngModel)]="newLastname">
 				<button *ngIf="newLastname" matSuffix mat-icon-button aria-label="Clear" (click)="newLastname=''">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
-			<mat-form-field class="example-form-field" appearance="fill">
+			<mat-form-field class="example-form-field" >
 				<mat-label>Department</mat-label>
 				<input matInput type="text" [(ngModel)]="newDepartment">
 				<button *ngIf="newDepartment" matSuffix mat-icon-button aria-label="Clear" (click)="newDepartment=''">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
-			<button class="btn btn-success add-salesman-btn" (click)="createSalesman()">Add Salesman</button>
+			<button mat-stroked-button color="primary" class="add-salesman-btn" (click)="createSalesman()">Add Salesman</button>
 		</div>
 		<div
 			*ngIf="hasError"

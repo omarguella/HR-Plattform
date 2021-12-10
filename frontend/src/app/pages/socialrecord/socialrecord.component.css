@@ -1,0 +1,45 @@
+:host {
+	display: flex;
+	justify-content: center;
+}
+
+.salesman-info h5 {
+	margin-bottom: 0;
+}
+
+.title {
+	letter-spacing: 1px;
+	font-weight: bold;
+	font-size: 20px;
+	margin: 0;
+}
+
+table {
+	width: 100%;
+}
+
+table th, table tr {
+	text-align: center;
+}
+
+.actionBtn {
+	width: 120px;
+	font-size: 13px;
+	font-weight: lighter;
+	margin: 0 5px;
+}
+
+.add-social-record {
+	margin-top: 50px;
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.add-social-record-btn {
+	height: 50px;
+}
+
+mat-form-field {
+	width: 140px;
+}

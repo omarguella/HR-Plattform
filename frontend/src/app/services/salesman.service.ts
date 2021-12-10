@@ -12,8 +12,12 @@ export class SalesmanService {
 	constructor(private http: HttpClient) {
 	}
 
-	getSalesman(): Observable<Salesman[]> {
+	getSalesmen(): Observable<Salesman[]> {
 		return this.http.get<Salesman[]>(this.baseUrl, { observe: 'body', withCredentials: true });
+	}
+
+	getSalesmanBySid(sid: number): Observable<Salesman> {
+		return this.http.get<Salesman>(`${this.baseUrl}/${sid}`, { observe: 'body', withCredentials: true });
 	}
 
 	createSalesman(s: Salesman): Observable<Salesman> {

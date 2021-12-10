@@ -22,6 +22,7 @@ import { SalesmanComponent } from './pages/salesman/salesman.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SocialrecordComponent } from './pages/socialrecord/socialrecord.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     ExamplePageComponent,
     NotFoundPageComponent,
     SalesmanComponent,
-    SidebarComponent
+    SidebarComponent,
+    SocialrecordComponent
   ],
     imports: [
         BrowserModule,
