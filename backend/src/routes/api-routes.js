@@ -15,36 +15,41 @@ router.get('/login', authApi.isLoggedIn); //the function, which handles requests
 const userApi = require('../apis/user-api');
 router.get('/user', checkAuthorization(false), userApi.getSelf);
 
-
 module.exports = router;
-
 
 const salesmanApi = require('../apis/salesman-api');
 router.route("/salesman")
-    .get( checkAuthorization(false), salesmanApi.getAll)
+    .get( checkAuthorization(true), salesmanApi.getAll)
     .post(checkAuthorization(true), salesmanApi.create)
 router.route("/salesman/:sid")
-    .get(checkAuthorization(false),salesmanApi.getBySid)
-    .put(checkAuthorization(false),salesmanApi.updateBySid)
-    .delete(checkAuthorization(false),salesmanApi.deleteBySid)
+    .get(checkAuthorization(true),salesmanApi.getBySid)
+    .put(checkAuthorization(true),salesmanApi.updateBySid)
+    .delete(checkAuthorization(true),salesmanApi.deleteBySid)
 
 const socialRecordApi = require('../apis/socialRecord-api');
 router.route("/socialrecord")
     .get(checkAuthorization(true),socialRecordApi.getAll)
     .post(checkAuthorization(true), socialRecordApi.create)
 router.route("/socialrecord/:id")
-    .get(checkAuthorization(false), socialRecordApi.getById)
+    .get(checkAuthorization(true), socialRecordApi.getById)
     .put(checkAuthorization(true), socialRecordApi.update)
-    .delete(checkAuthorization(false),socialRecordApi.deleteById)
+    .delete(checkAuthorization(true),socialRecordApi.deleteById)
 router.route("/socialrecord/:sid/:year")
-    .get(checkAuthorization(false),socialRecordApi.getBySidAndYear)
-    .delete(checkAuthorization(false), socialRecordApi.deleteBySidAndYear)
-
-const productApi = require('../apis/product-api');
-router.get('/product', checkAuthorization(true), productApi.getAll);
-router.get('/product/:id', checkAuthorization(true), productApi.getById);
+    .get(checkAuthorization(true),socialRecordApi.getBySidAndYear)
+    .delete(checkAuthorization(true), socialRecordApi.deleteBySidAndYear)
 
 const orangeHrmApi = require('../apis/orange-hrm-api');
 router.route('/orangehrm')
 	.get(checkAuthorization(true), orangeHrmApi.synchronize)
 	.post(checkAuthorization(true), orangeHrmApi.bonusSalary)
+
+const productApi = require('../apis/product-api');
+router.get('/opencrx/product', checkAuthorization(true), productApi.getAll);
+router.get('/opencrx/product/:id', checkAuthorization(true), productApi.getById);
+
+const customerApi = require('../apis/customer-api');
+router.get('/opencrx/customer', checkAuthorization(true), customerApi.getAll)
+router.get('/opencrx/customer/:id', checkAuthorization(true), customerApi.getById)
+
+const orderApi = require('../apis/order-api');
+router.get('/opencrx/order', checkAuthorization(true), orderApi.getAll)

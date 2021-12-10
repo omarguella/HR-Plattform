@@ -1,4 +1,4 @@
-const Product = require("../models/Product");
+const Product = require("../models/openCRX/Product");
 
 async function setUniqueIndex(db, collection, field) {
     db.collection(collection).createIndex(

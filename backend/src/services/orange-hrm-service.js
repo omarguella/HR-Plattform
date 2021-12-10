@@ -1,5 +1,5 @@
 const axios = require("axios");
-const {ORANGE_BASE_URL, authenticate} = require("../models/OrangeHrmConfig");
+const {ORANGE_BASE_URL, authenticate} = require("../models/orangeHRM/OrangeHrmConfig");
 const salesmanService = require("../services/salesman-service");
 const Salesman = require("../models/Salesman");
 const FormData = require('form-data');

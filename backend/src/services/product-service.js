@@ -1,6 +1,6 @@
 const axios = require("axios");
-const {CRX_BASE_URL, CRX_CONFIG} = require('../models/OpenCrxConfig.js');
-const Product = require("../models/Product");
+const {CRX_BASE_URL, CRX_CONFIG} = require('../models/openCRX/OpenCrxConfig.js');
+const Product = require("../models/openCRX/Product");
 
 /**
  * gets All Products from openCRX
@@ -14,7 +14,7 @@ exports.get = async function () {
 		CRX_CONFIG
 	);
 
-	const {data: { objects }} = res;
+	const {data: {objects}} = res;
 	for (const item of objects) {
 		products.push(await createProductFromOpenCrx(item))
 	}
@@ -23,7 +23,7 @@ exports.get = async function () {
 }
 
 /**
- * gives a unique Salesman back
+ * gives a unique Product back
  * @param {string} id
  * @return {Promise<Product>}
  */
@@ -33,7 +33,7 @@ exports.getById = async function (id) {
 		CRX_CONFIG
 	);
 
-	const { data } = res;
+	const {data} = res;
 
 	return await createProductFromOpenCrx(data);
 }
@@ -42,13 +42,11 @@ exports.getById = async function (id) {
  * Helper function to extract needed data from response Product Object
  * @return {Promise<Product>}
  */
-async function createProductFromOpenCrx(openCrxData) {
-	const id = openCrxData.identity.split("/").at(-1);
-	const name = openCrxData.name;
-	const minPositions = openCrxData.minPositions;
-	const maxPositions = openCrxData.maxPositions;
+async function createProductFromOpenCrx(openCrxProductData) {
+	const id = openCrxProductData.identity.split("/").at(-1);
+	const {name, productNumber, description} = openCrxProductData;
 
-	return new Product(id, name, minPositions, maxPositions);
+	return new Product(id, name, description, productNumber);
 }
 
 
