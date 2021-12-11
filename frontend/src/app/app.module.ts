@@ -23,6 +23,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SocialrecordComponent } from './pages/socialrecord/socialrecord.component';
+import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SocialrecordComponent } from './pages/socialrecord/socialrecord.compone
     NotFoundPageComponent,
     SalesmanComponent,
     SidebarComponent,
-    SocialrecordComponent
+    SocialrecordComponent,
+    BonussalaryComponent
   ],
     imports: [
         BrowserModule,

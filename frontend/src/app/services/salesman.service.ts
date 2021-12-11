@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Salesman } from '../models/Salesman';
 import { Observable } from 'rxjs';
+import { Bonussalary } from '../models/Bonussalary';
 
 @Injectable({
 	providedIn: 'root'
@@ -34,5 +35,9 @@ export class SalesmanService {
 
 	synchronize(): Observable<void> {
 		return this.http.get<void>('/api/orangehrm', { withCredentials: true });
+	}
+
+	addBonusSalary(bonussalary: Bonussalary): Observable<void> {
+		return this.http.post<void>('/api/orangehrm', bonussalary, { withCredentials: true });
 	}
 }

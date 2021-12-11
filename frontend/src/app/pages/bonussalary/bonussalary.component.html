@@ -1,1 +1,108 @@
-<p>bonussalary works!</p>
+<div class="card p-2 w-75">
+	<div class="card-header d-flex justify-content-between">
+		<div>
+			<h3 class="title">Bonus Salary Computation</h3>
+			<div *ngIf="salesman" class="salesman-info">
+				<h4><b>Fullname:</b> {{salesman.firstname + ' ' + salesman.lastname}}</h4>
+				<h4><b>Employee ID:</b> {{salesman.code}}</h4>
+				<h4><b>Department:</b> {{salesman.department}}</h4>
+				<mat-form-field>
+					<mat-label><h4 id="yop">Year of Performance</h4></mat-label>
+					<input class="boldweight" matInput type="number" [(ngModel)]="yearOfPerformance" (input)="handleYearChange()">
+				</mat-form-field>
+			</div>
+		</div>
+		<div class="d-flex flex-column">
+			<mat-form-field>
+				<mat-label><h4 id="tb">Total Bonus (€)</h4></mat-label>
+				<input class="boldweight" matInput type="number" [(ngModel)]="bonusTotal">
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Remarks</mat-label>
+				<textarea matInput placeholder="this textarea doesn't do anything at the moment"
+									[(ngModel)]="remarks"></textarea>
+			</mat-form-field>
+			<button (click)="addBonussalary()" mat-raised-button color="primary">Add Bonus Salary</button>
+		</div>
+	</div>
+	<div>
+		<div *ngIf="showNotification" class="alert alert-success" role="alert">
+			Bonussalary was successfully added!
+		</div>
+	</div>
+	<div class="card-body evaluations">
+		<div class="card" id="sre">
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<h4 class="sub-title">Social Performance Evaluation</h4>
+				<mat-form-field>
+					<mat-label>Total Bonus of Social Records (€)</mat-label>
+					<input matInput type="number" [(ngModel)]="bonusSocialRecords" (input)="handleManualBonusChange()">
+				</mat-form-field>
+			</div>
+			<div class="card-body">
+				<table mat-table [dataSource]="socialRecords" class="mat-elevation-z8">
+					<ng-container matColumnDef="description">
+						<th mat-header-cell *matHeaderCellDef>Description</th>
+						<td mat-cell *matCellDef="let element"> {{element.description}} </td>
+					</ng-container>
+					<ng-container matColumnDef="targetValue">
+						<th mat-header-cell *matHeaderCellDef>Target Value</th>
+						<td mat-cell *matCellDef="let element"> {{element.targetValue}} </td>
+					</ng-container>
+					<ng-container matColumnDef="actualValue">
+						<th mat-header-cell *matHeaderCellDef>Actual Value</th>
+						<td mat-cell *matCellDef="let element"> {{element.actualValue}} </td>
+					</ng-container>
+					<ng-container matColumnDef="bonus">
+						<th mat-header-cell *matHeaderCellDef>Bonus</th>
+						<td mat-cell *matCellDef="let element"> {{element.bonus}} €</td>
+					</ng-container>
+					<ng-container matColumnDef="comment">
+						<th mat-header-cell *matHeaderCellDef>Comment</th>
+						<td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<h4 class="sub-title">Order Evaluations</h4>
+				<mat-form-field>
+					<mat-label>Total Bonus of Orders (€)</mat-label>
+					<input matInput type="number" [(ngModel)]="bonusOrders" (input)="handleManualBonusChange()">
+				</mat-form-field>
+			</div>
+			<div class="card-body">
+				<table mat-table [dataSource]="singleOrders" class="mat-elevation-z8">
+					<ng-container matColumnDef="productName">
+						<th mat-header-cell *matHeaderCellDef>Product</th>
+						<td mat-cell *matCellDef="let element"> {{element.product.name}} </td>
+					</ng-container>
+					<ng-container matColumnDef="customer">
+						<th mat-header-cell *matHeaderCellDef>Client</th>
+						<td mat-cell *matCellDef="let element"> {{element.customer.fullname}} </td>
+					</ng-container>
+					<ng-container matColumnDef="rating">
+						<th mat-header-cell *matHeaderCellDef>Client Ranking</th>
+						<td mat-cell *matCellDef="let element"> {{ratingToString(element.customer.rating)}} </td>
+					</ng-container>
+					<ng-container matColumnDef="quantity">
+						<th mat-header-cell *matHeaderCellDef>Quantity</th>
+						<td mat-cell *matCellDef="let element"> {{quantityToInt(element.quantity)}} </td>
+					</ng-container>
+
+					<ng-container matColumnDef="bonus">
+						<th mat-header-cell *matHeaderCellDef>Bonus</th>
+						<td mat-cell *matCellDef="let element"> {{element.bonus}} €</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumnsSales"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumnsSales;"></tr>
+				</table>
+			</div>
+		</div>
+
+	</div>
+</div>

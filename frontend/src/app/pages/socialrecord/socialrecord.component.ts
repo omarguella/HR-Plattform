@@ -16,6 +16,10 @@ export class SocialrecordComponent implements OnInit {
 	salesman: Salesman;
 	socialRecords: Socialrecord[] = [];
 
+	activeSocialRecord: Socialrecord;
+
+	updatedSocialRecord: Socialrecord;
+
 	newDescription: string;
 	newYear: number;
 	newTargetValue: number;
@@ -24,7 +28,10 @@ export class SocialrecordComponent implements OnInit {
 	newComment: string;
 
 	@ViewChild(MatTable) table: MatTable<Socialrecord>;
-	displayedColumns: string[] = [ 'description', 'targetValue', 'actualValue', 'bonus', 'comment', 'action' ];
+	displayedColumns: string[] = [ 'description', 'year', 'targetValue', 'actualValue', 'bonus', 'comment', 'action' ];
+
+	@ViewChild('deleteModal') deleteModal: any;
+	@ViewChild('updateModal') updateModal: any;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -59,12 +66,61 @@ export class SocialrecordComponent implements OnInit {
 			});
 	}
 
+	updateSocialRecord(id: string, newValues: Socialrecord): void {
+		this.socialRecordService
+			.updateSocialRecord(id, newValues)
+			.subscribe();
+	}
+
 	addSocialRecord(): void {
-		console.log(this.newDescription, this.newTargetValue, this.newActualValue, this.newBonus);
+		const _sr = new Socialrecord(
+			undefined,
+			this.newDescription,
+			this.sid, this.newYear,
+			this.newTargetValue,
+			this.newActualValue,
+			this.newBonus,
+			this.newComment
+		);
+
+		this.socialRecordService
+			.createSocialRecord(_sr)
+			.subscribe((data) => {
+				this.socialRecords.push(data);
+				this.table.renderRows();
+			});
 	}
 
 	handleChange(): void {
-		this.newBonus = ((this.newActualValue / this.newTargetValue) ** 2 * 50) || undefined;
+		this.newBonus = Math.round((this.newActualValue / this.newTargetValue) * 50) || undefined;
+	}
+
+	handleChangeEditModal(): void {
+		this.updatedSocialRecord.bonus =
+			Math.round(
+				(this.updatedSocialRecord.actualValue / this.updatedSocialRecord.targetValue) * 50)
+			|| undefined;
+	}
+
+	showCloseDeleteModal(): void {
+		const modal = this.deleteModal.nativeElement;
+		modal.classList.toggle('active');
+	}
+
+	showCloseUpdateModal(): void {
+		const modal = this.updateModal.nativeElement;
+		modal.classList.toggle('active');
+	}
+
+	handleDeleteClick(sr: Socialrecord): void {
+		this.activeSocialRecord = { ...sr };
+		this.showCloseDeleteModal();
+	}
+
+	handleEditClick(sr: Socialrecord): void {
+		this.activeSocialRecord = { ...sr };
+		this.updatedSocialRecord = { ...sr };
+		this.showCloseUpdateModal();
 	}
 
 }
