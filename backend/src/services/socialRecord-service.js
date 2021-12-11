@@ -62,7 +62,7 @@ exports.create = async function (db, socialRecord) {
  * @param db target database
  * @param {string} id
  * @param {SocialRecord} socialRecord
- * @return {Promise<SocialRecord>}
+ * @return {Promise<void>}
  */
 exports.update = async function (db, id, socialRecord) {
     const filter = {

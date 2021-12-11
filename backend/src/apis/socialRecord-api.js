@@ -90,7 +90,7 @@ exports.create = async function (req, res) {
     );
 
     const id = await socialRecordService.create(db, newSocialRecord);
-    res.status(201).send(`created new SocialRecord with id: ${id}`)
+    res.status(201).json(newSocialRecord);
 }
 
 /**
@@ -103,17 +103,15 @@ exports.update = async function (req, res) {
     const _id = req.params.id;
     const db = req.app.get('db');
     const newSocialRecord = req.body;
-
+    delete(newSocialRecord._id);
     const _sr = await socialRecordService.getById(db, _id);
 
     if(!_sr) {
         res.status(404).send()
     } else {
         await socialRecordService.update(db, _id, newSocialRecord);
-        res.send("SocialRecord is updated");
+        res.json({_id, ...newSocialRecord});
     }
-
-
 }
 
 /**
