@@ -17,7 +17,6 @@ const MongoClient = mongodb.MongoClient;
 
 
 const {synchronizeSalesmen} = require("./services/orange-hrm-service");
-const {setUniqueIndex} = require("./utils/helper");
 
 // MongoDB connection details:
 const domain = 'localhost';
@@ -78,8 +77,5 @@ async function initDb(db) {
     }
 
     await synchronizeSalesmen(db);
-
-    await setUniqueIndex(db, "salesmen", "sid");
-
 }
 

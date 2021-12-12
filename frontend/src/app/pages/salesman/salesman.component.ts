@@ -10,7 +10,6 @@ import { SalesmanService } from '../../services/salesman.service';
 })
 export class SalesmanComponent implements OnInit {
 	salesmen: Salesman[] = [];
-	hasError = false;
 
 	activeSalesman: Salesman; // the clicked salesman needed for the modal
 	updatedValues: Salesman;
@@ -18,12 +17,8 @@ export class SalesmanComponent implements OnInit {
 	@ViewChild(MatTable) table: MatTable<Salesman>;
 	displayedColumns: string[] = [ 'code', 'firstname', 'lastname', 'department', 'action' ];
 
-	// Fields to create a new Salesman
-	newSid: number;
-	newCode: number;
-	newFirstname: string;
-	newLastname: string;
-	newDepartment: string;
+	newSalesman: Salesman;
+	hasError = false;
 
 	@ViewChild('deleteModal') deleteModal: any;
 	@ViewChild('updateModal') updateModal: any;
@@ -34,6 +29,7 @@ export class SalesmanComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getSalesman();
+		this.newSalesman = new Salesman(undefined, undefined, undefined, undefined, undefined);
 	}
 
 	getSalesman(): void {
@@ -45,16 +41,15 @@ export class SalesmanComponent implements OnInit {
 	}
 
 	createSalesman(): Promise<void> {
-		if (!this.newSid || !this.newCode || !this.newFirstname || !this.newLastname) {
+		if (!this.newSalesman.sid || !this.newSalesman.code || !this.newSalesman.firstname || !this.newSalesman.lastname) {
 			this.hasError = true;
 			return;
 		}
 
-		const _s = new Salesman(this.newSid, this.newCode, this.newFirstname, this.newLastname, this.newDepartment);
 		this.salesmanService
-			.createSalesman(_s)
+			.createSalesman(this.newSalesman)
 			.subscribe(() => {
-				this.salesmen.push(_s);
+				this.salesmen.push(this.newSalesman);
 				this.table.renderRows();
 				this.resetFields();
 			});
@@ -87,8 +82,7 @@ export class SalesmanComponent implements OnInit {
 	}
 
 	resetFields(): void {
-		this.newSid = this.newCode = undefined;
-		this.newFirstname = this.newLastname = this.newDepartment = '';
+		this.newSalesman = new Salesman(undefined, undefined, undefined, undefined, undefined);
 		this.hasError = false;
 	}
 

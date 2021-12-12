@@ -40,7 +40,7 @@ mat-drawer-content {
 	float: right;
 }
 
-.sidenav-button:after {
+.arrow:after {
 	content: '\27A4';
 	float: right;
 }

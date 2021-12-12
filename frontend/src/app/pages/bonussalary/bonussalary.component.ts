@@ -27,6 +27,8 @@ export class BonussalaryComponent implements OnInit {
 	remarks = '';
 
 	showNotification = false;
+	hasError = false;
+	errorText = '';
 
 	@ViewChild(MatTable) table: MatTable<Socialrecord>;
 	displayedColumns: string[] = [ 'description', 'targetValue', 'actualValue', 'bonus', 'comment' ];
@@ -116,6 +118,20 @@ export class BonussalaryComponent implements OnInit {
 	}
 
 	addBonussalary(): void {
+		if (!this.yearOfPerformance) {
+			this.hasError = true;
+			this.errorText = 'Year of performance is missing!';
+			setTimeout(() => this.hasError = false, 3000);
+			return;
+		}
+
+		if (!this.bonusTotal) {
+			this.hasError = true;
+			this.errorText = 'Bonus cannot be 0';
+			setTimeout(() => this.hasError = false, 3000);
+			return;
+		}
+
 		this.salesmanService
 			.addBonusSalary(new Bonussalary(this.sid, this.yearOfPerformance, this.bonusTotal))
 			.subscribe(() => {

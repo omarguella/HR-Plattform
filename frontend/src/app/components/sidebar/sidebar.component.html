@@ -1,25 +1,40 @@
 <mat-drawer-container>
 	<mat-drawer mode="side" opened>
 		<div class="menu-group">
-
+			<button class="sidenav-menu-button arrow mb-4" mat-raised-button routerLinkActive="active"
+							[routerLinkActiveOptions]="{exact: true}" routerLink="/salesman">
+				Salesman Manager
+			</button>
+		</div>
+		<div class="menu-group">
+			<button class="sidenav-menu-button" mat-raised-button>
+				OpenCRX Overview
+			</button>
+			<button class="sidenav-button arrow" mat-raised-button routerLinkActive="active"
+							[routerLinkActiveOptions]="{exact: true}" routerLink="/products">
+				Products
+			</button>
+			<button class="sidenav-button arrow" mat-raised-button routerLinkActive="active"
+							[routerLinkActiveOptions]="{exact: true}" routerLink="/customers">
+				Customers
+			</button>
+			<button class="sidenav-button arrow" mat-raised-button routerLinkActive="active"
+							[routerLinkActiveOptions]="{exact: true}" routerLink="/sales">
+				Sales
+			</button>
 		</div>
 
 		<div class="menu-group">
-			<button class="sidenav-menu-button" mat-raised-button routerLinkActive="active"
-							[routerLinkActiveOptions]="{exact: true}" routerLink="/salesman">
-				Menu ...
+			<button class="sidenav-menu-button" mat-raised-button>
+				User Manager
 			</button>
-			<button class="sidenav-button" mat-raised-button routerLinkActive="active"
-							[routerLinkActiveOptions]="{exact: true}" routerLink="/salesman">
-				Salesmen Manager
+			<button class="sidenav-button arrow" mat-raised-button routerLinkActive="active"
+							[routerLinkActiveOptions]="{exact: true}" routerLink="/profil">
+				Profil
 			</button>
-			<button class="sidenav-button" mat-raised-button routerLinkActive="active"
-							[routerLinkActiveOptions]="{exact: true}" routerLink="/salesman">
-				link 2 ...
-			</button>
-			<button class="sidenav-button" mat-raised-button routerLinkActive="active"
-							[routerLinkActiveOptions]="{exact: true}" routerLink="/salesman">
-				link 3 ...
+			<button class="sidenav-button arrow" mat-raised-button routerLinkActive="active"
+							[routerLinkActiveOptions]="{exact: true}" routerLink="/users">
+				Accounts
 			</button>
 		</div>
 	</mat-drawer>

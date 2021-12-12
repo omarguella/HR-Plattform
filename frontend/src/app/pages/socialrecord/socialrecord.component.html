@@ -3,13 +3,13 @@
 		<div>
 			<h3 class="title">Social Performance Evaluation</h3>
 			<div *ngIf="salesman" class="salesman-info">
-				<h5><b>Fullname:</b> {{salesman.firstname + ' ' + salesman.lastname}}</h5>
-				<h5><b>Employee ID:</b> {{salesman.code}}</h5>
-				<h5><b>Department:</b> {{salesman.department}}</h5>
+				<h4><b>Fullname:</b> {{salesman.firstname + ' ' + salesman.lastname}}</h4>
+				<h4><b>Employee ID:</b> {{salesman.code}}</h4>
+				<h4><b>Department:</b> {{salesman.department}}</h4>
 			</div>
 		</div>
 		<div>
-			<button mat-raised-button routerLink="/bonussalary/{{sid}}">Add Bonussalary
+			<button *ngIf="salesman" mat-raised-button routerLink="/bonussalary/{{sid}}">Add Bonussalary
 				for {{salesman.firstname + ' ' + salesman.lastname}}</button>
 		</div>
 	</div>
@@ -55,49 +55,63 @@
 		<div class="add-social-record">
 			<mat-form-field class="example-form-field">
 				<mat-label>Description *</mat-label>
-				<input matInput type="text" [(ngModel)]="newDescription">
-				<button *ngIf="newDescription" matSuffix mat-icon-button aria-label="Clear" (click)="newDescription=''">
+				<input matInput type="text" [(ngModel)]="newSocialRecord.description">
+				<button *ngIf="newSocialRecord.description" matSuffix mat-icon-button aria-label="Clear"
+								(click)="newSocialRecord.description=undefined">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
 			<mat-form-field class="example-form-field">
 				<mat-label>Year *</mat-label>
-				<input matInput type="number" [(ngModel)]="newYear">
-				<button *ngIf="newYear" matSuffix mat-icon-button aria-label="Clear" (click)="newYear=undefined">
+				<input matInput type="number" [(ngModel)]="newSocialRecord.year">
+				<button *ngIf="newSocialRecord.year" matSuffix mat-icon-button aria-label="Clear"
+								(click)="newSocialRecord.year=undefined">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
 			<mat-form-field class="example-form-field">
 				<mat-label>Target Value *</mat-label>
-				<input matInput type="number" [(ngModel)]="newTargetValue" (input)="handleChange()">
-				<button *ngIf="newTargetValue" matSuffix mat-icon-button aria-label="Clear" (click)="newTargetValue=undefined">
+				<input matInput type="number" [(ngModel)]="newSocialRecord.targetValue" (input)="handleChangeNewRecord()">
+				<button *ngIf="newSocialRecord.targetValue" matSuffix mat-icon-button aria-label="Clear"
+								(click)="newSocialRecord.targetValue=undefined">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
 			<mat-form-field class="example-form-field">
 				<mat-label>Acutal Value *</mat-label>
-				<input matInput type="number" [(ngModel)]="newActualValue" (input)="handleChange()">
-				<button *ngIf="newActualValue" matSuffix mat-icon-button aria-label="Clear" (click)="newActualValue=undefined">
+				<input matInput type="number" [(ngModel)]="newSocialRecord.actualValue" (input)="handleChangeNewRecord()">
+				<button *ngIf="newSocialRecord.actualValue" matSuffix mat-icon-button aria-label="Clear"
+								(click)="newSocialRecord.actualValue=undefined">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
 			<mat-form-field class="example-form-field">
-				<mat-label>Bonus *</mat-label>
-				<input matInput type="number" [(ngModel)]="newBonus">
-				<button *ngIf="newBonus" matSuffix mat-icon-button aria-label="Clear" (click)="newBonus=undefined">
+				<mat-label>Bonus</mat-label>
+				<input matInput type="number" [(ngModel)]="newSocialRecord.bonus">
+				<button *ngIf="newSocialRecord.bonus" matSuffix mat-icon-button aria-label="Clear"
+								(click)="newSocialRecord.bonus=undefined">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
 			<mat-form-field class="example-form-field">
 				<mat-label>Comment</mat-label>
-				<input matInput type="text" [(ngModel)]="newComment">
-				<button *ngIf="newComment" matSuffix mat-icon-button aria-label="Clear" (click)="newComment=''">
+				<input matInput type="text" [(ngModel)]="newSocialRecord.comment">
+				<button *ngIf="newSocialRecord.comment" matSuffix mat-icon-button aria-label="Clear"
+								(click)="newSocialRecord.comment=undefined">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
 			<button mat-stroked-button color="primary" class="add-social-record-btn" (click)="addSocialRecord()">Add Social
 				Record
 			</button>
+			<div
+				*ngIf="hasError"
+				class="alert alert-danger d-flex align-items-center"
+				role="alert"
+			>
+				<span class="material-icons mx-2">warning</span>
+				Please fill in the required properties (marked with *)
+			</div>
 		</div>
 	</div>
 </div>

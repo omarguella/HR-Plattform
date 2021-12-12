@@ -20,12 +20,8 @@ export class SocialrecordComponent implements OnInit {
 
 	updatedSocialRecord: Socialrecord;
 
-	newDescription: string;
-	newYear: number;
-	newTargetValue: number;
-	newActualValue: number;
-	newBonus: number;
-	newComment: string;
+	newSocialRecord: Socialrecord;
+	hasError: boolean;
 
 	@ViewChild(MatTable) table: MatTable<Socialrecord>;
 	displayedColumns: string[] = [ 'description', 'year', 'targetValue', 'actualValue', 'bonus', 'comment', 'action' ];
@@ -42,6 +38,16 @@ export class SocialrecordComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.sid = parseInt(this.route.snapshot.paramMap.get('sid'), 10);
+		this.newSocialRecord = new Socialrecord(
+			undefined,
+			undefined,
+			this.sid,
+			undefined,
+			undefined,
+			undefined,
+			undefined,
+			undefined
+		);
 		this.getSocialRecordsBySid(this.sid);
 		this.getSalesman(this.sid);
 	}
@@ -73,33 +79,45 @@ export class SocialrecordComponent implements OnInit {
 	}
 
 	addSocialRecord(): void {
-		const _sr = new Socialrecord(
-			undefined,
-			this.newDescription,
-			this.sid, this.newYear,
-			this.newTargetValue,
-			this.newActualValue,
-			this.newBonus,
-			this.newComment
-		);
+		if (!this.validateInput()) {
+			this.hasError = true;
+			return;
+		}
 
 		this.socialRecordService
-			.createSocialRecord(_sr)
+			.createSocialRecord(this.newSocialRecord)
 			.subscribe((data) => {
 				this.socialRecords.push(data);
 				this.table.renderRows();
+				this.clearFields();
+				this.hasError = false;
 			});
 	}
 
-	handleChange(): void {
-		this.newBonus = Math.round((this.newActualValue / this.newTargetValue) * 50) || undefined;
+	validateInput(): boolean {
+		return (
+			this.newSocialRecord.description
+			&& this.newSocialRecord.year
+			&& this.newSocialRecord.targetValue
+			&& this.newSocialRecord.actualValue
+			&& true
+		);
+	}
+
+	handleChangeNewRecord(): void {
+		this.newSocialRecord.bonus =
+			this.calculateBonus(
+				this.newSocialRecord.targetValue,
+				this.newSocialRecord.actualValue
+			);
 	}
 
 	handleChangeEditModal(): void {
 		this.updatedSocialRecord.bonus =
-			Math.round(
-				(this.updatedSocialRecord.actualValue / this.updatedSocialRecord.targetValue) * 50)
-			|| undefined;
+			this.calculateBonus(
+				this.updatedSocialRecord.targetValue,
+				this.updatedSocialRecord.actualValue
+			);
 	}
 
 	showCloseDeleteModal(): void {
@@ -121,6 +139,26 @@ export class SocialrecordComponent implements OnInit {
 		this.activeSocialRecord = { ...sr };
 		this.updatedSocialRecord = { ...sr };
 		this.showCloseUpdateModal();
+	}
+
+	calculateBonus(a: number, b: number): number {
+		if (!a || !b) {
+			return 0;
+		}
+		return Math.round((b / a) * 50 + ((b - a) / 2) * 30);
+	}
+
+	clearFields(): void {
+		this.newSocialRecord = new Socialrecord(
+			undefined,
+			undefined,
+			this.sid,
+			undefined,
+			undefined,
+			undefined,
+			undefined,
+			undefined
+		);
 	}
 
 }

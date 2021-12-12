@@ -29,6 +29,9 @@
 		<div *ngIf="showNotification" class="alert alert-success" role="alert">
 			Bonussalary was successfully added!
 		</div>
+		<div *ngIf="hasError" class="alert alert-danger" role="alert">
+			{{errorText}}
+		</div>
 	</div>
 	<div class="card-body evaluations">
 		<div class="card" id="sre">
