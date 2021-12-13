@@ -16,12 +16,12 @@ exports.add = async function (db, user) {
 /**
  * retrieves user from database by its username
  * @param db source database
- * @param {string} username
+ * @param {string} uid
  * @return {Promise<User>}
  */
-exports.get = async function (db, username) {
+exports.get = async function (db, uid) {
     return db.collection('users').findOne({
-        username: username
+        "uid": uid
     });
 }
 
@@ -43,10 +43,10 @@ exports.getAll = async function (db) {
  * @param {User} user
  * @return {Promise<User>}
  */
-exports.update = async function (db, username, user) {
+exports.update = async function (db, uid, user) {
 
     const filter = {
-        "username": username
+        "uid": uid
     };
 
     user.password = hashPassword(user.password);
@@ -65,19 +65,38 @@ exports.update = async function (db, username, user) {
 
 
 
+
+
 /**
  * removes user permanently from database
  * @param db target database
  * @param {number} uid
  * @return {Promise<void>}
  */
-exports.delete = async function (db, username) {
+exports.delete = async function (db, uid) {
     const filter = {
-        "username": username
+        "uid": uid
     };
     db.collection('users').deleteOne(filter);
 
 }
+
+
+
+
+
+/**
+ * retrieves user from database by its username
+ * @param db source database
+ * @param {string} username
+ * @return {Promise<User>}
+ */
+exports.getVerify = async function (db, username) {
+    return db.collection('users').findOne({
+        username: username
+    });
+}
+
 
 
 /**
@@ -87,7 +106,7 @@ exports.delete = async function (db, username) {
  * @return {Promise<User>}
  */
 exports.verify = async function (db, credentials) {
-    let user = await this.get(db, credentials.username); //retrieve user with given email from database
+    let user = await this.getVerify(db, credentials.username); //retrieve user with given email from database
 
     if (!user) throw new Error('User was not found!'); //no user found -> throw error
     if (!verifyPassword(credentials.password, user.password)) throw new Error('Password wrong!');
