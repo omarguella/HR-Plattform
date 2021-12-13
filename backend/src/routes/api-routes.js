@@ -18,7 +18,7 @@ const userApi = require('../apis/user-api');
 router.route("/user")
     .get(checkAuthorization(false), userApi.getAll)
     .post(checkAuthorization(true), userApi.create)
-router.route("/user/:uid")
+router.route("/user/:username")
     .get(checkAuthorization(false), userApi.getOne)
     .put(checkAuthorization(false), userApi.update)
     .delete(checkAuthorization(false), userApi.delete)
