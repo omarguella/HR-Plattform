@@ -1,3 +1,4 @@
+import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
 	{ path: 'login', component: LoginPageComponent },
 	{ path: 'example', component: ExamplePageComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'salesman', component: SalesmanComponent, canActivate: [ AuthGuardService ] },
+	{ path: 'users', component: UsersPageComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'socialrecord/:sid', component: SocialrecordComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'bonussalary/:sid', component: BonussalaryComponent, canActivate: [ AuthGuardService ] },
 	{ path: '', component: LandingPageComponent, canActivate: [ AuthGuardService ] },

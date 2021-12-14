@@ -1,0 +1,171 @@
+<div class="card p-2 w-75">
+	<div class="card-header d-flex justify-content-between align-items-center">
+		<h3 class="title">Users List</h3>
+		<button mat-raised-button (click)="synchronizeUser()">Snychronize</button>
+	</div>
+	<div class="card-body">
+		<table mat-table [dataSource]="users" class="mat-elevation-z8">
+			<ng-container matColumnDef="username">
+				<th mat-header-cell *matHeaderCellDef> User Name</th>
+				<td mat-cell *matCellDef="let element">{{element.username}} </td>
+			</ng-container>
+			<ng-container matColumnDef="firstname">
+				<th mat-header-cell *matHeaderCellDef> First Name</th>
+				<td mat-cell *matCellDef="let element">{{element.firstname}} </td>
+			</ng-container>
+			<ng-container matColumnDef="lastname">
+				<th mat-header-cell *matHeaderCellDef> Last Name</th>
+				<td mat-cell *matCellDef="let element">{{element.lastname}} </td>
+			</ng-container>
+			<ng-container matColumnDef="email">
+				<th mat-header-cell *matHeaderCellDef> Email</th>
+				<td mat-cell *matCellDef="let element">{{element.email}} </td>
+			</ng-container>
+			<ng-container matColumnDef="categorie">
+				<th mat-header-cell *matHeaderCellDef> categorie</th>
+				<td mat-cell *matCellDef="let element">{{element.categorie}} </td>
+			</ng-container>
+			<ng-container matColumnDef="action">
+				<th mat-header-cell *matHeaderCellDef> Action</th>
+				<td mat-cell *matCellDef="let element">
+					<button (click)="handleEditClick(element)" mat-raised-button color="primary" class="actionBtn">EDIT</button>
+					<button (click)="handleDeleteClick(element)" mat-raised-button color="warn" class="actionBtn">DELETE</button>
+				</td>
+			</ng-container>
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		</table>
+		<div class="add-salesman">
+
+			<mat-form-field class="example-form-field">
+				<mat-label>UserName *</mat-label>
+				<input matInput type="text" [(ngModel)]="newUser.username">
+				<button *ngIf="newUser.username" matSuffix mat-icon-button aria-label="Clear"
+					(click)="newUser.username=undefined">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+			<mat-form-field class="example-form-field">
+				<mat-label>Password *</mat-label>
+				<input matInput type="text" [(ngModel)]="newUser.password">
+				<button *ngIf="newUser.username" matSuffix mat-icon-button aria-label="Clear"
+					(click)="newUser.password=undefined">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+			<mat-form-field class="example-form-field">
+				<mat-label>Firstname *</mat-label>
+				<input matInput type="text" [(ngModel)]="newUser.firstname">
+				<button *ngIf="newUser.firstname" matSuffix mat-icon-button aria-label="Clear"
+					(click)="newUser.firstname=undefined">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+			<mat-form-field class="example-form-field">
+				<mat-label>Lastname *</mat-label>
+				<input matInput type="text" [(ngModel)]="newUser.lastname">
+				<button *ngIf="newUser.lastname" matSuffix mat-icon-button aria-label="Clear"
+					(click)="newUser.lastname=undefined">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+			<mat-form-field class="example-form-field">
+				<mat-label>Email</mat-label>
+				<input matInput type="text" [(ngModel)]="newUser.email">
+				<button *ngIf="newUser.email" matSuffix mat-icon-button aria-label="Clear" (click)="newUser.email=undefined">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+			<mat-form-field class="example-form-field">
+				<mat-label>Type</mat-label>
+				<select matNativeControl [(ngModel)]="newUser.categorie">
+					<option value="HR">HR</option>
+					<option value="salesman">salesman</option>
+					<option value="admin">admin</option>
+				</select>
+			</mat-form-field>
+			<button mat-stroked-button color="primary" class="add-salesman-btn" (click)="createUser()">Add User
+			</button>
+		</div>
+		<div *ngIf="hasError" class="alert alert-danger w-50 d-flex align-items-center" role="alert">
+			<span class="material-icons mx-2">warning</span>
+			Please fill in the required properties (marked with *)
+		</div>
+	</div>
+</div>
+
+<div #deleteModal class="modal__container">
+	<div class="card deleteModal">
+		<h1>Confirmation Dialog</h1>
+		<mat-divider></mat-divider>
+		<div class="my-2">
+			<div>
+				User with user Name "{{activeUser && activeUser.username}}" is going to be deleted permanently from the
+				database!
+				<strong>Do you want to continue?</strong>
+			</div>
+
+		</div>
+		<mat-divider></mat-divider>
+		<div class="modalBtn__container p-2">
+			<button (click)="showCloseDeleteModal();" mat-button color="primary">Cancel</button>
+			<button mat-button color="warn" (click)="deleteUser(activeUser.username); showCloseDeleteModal();">Yes</button>
+		</div>
+
+	</div>
+</div>
+
+<div #updateModal class="modal__container">
+	<div class="card updateModal">
+		<h1>Confirmation Dialog</h1>
+		<mat-divider></mat-divider>
+		<div class="my-2">
+			<div>
+				<mat-form-field appearance="fill" class="mx-2">
+					<mat-label>User Name *</mat-label>
+					<input matInput type="text" [(ngModel)]="updatedValues && updatedValues.username">
+
+				</mat-form-field>
+			</div>
+
+			<div>
+				<mat-form-field appearance="fill">
+					<mat-label>Firstname *</mat-label>
+					<input matInput type="text" [(ngModel)]="updatedValues && updatedValues.firstname">
+
+				</mat-form-field>
+				<mat-form-field appearance="fill" class="mx-2">
+					<mat-label>Lastname *</mat-label>
+					<input matInput type="text" [(ngModel)]="updatedValues && updatedValues.lastname">
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field appearance="fill">
+					<mat-label>Email</mat-label>
+					<input matInput type="text" [(ngModel)]="updatedValues && updatedValues.email">
+				</mat-form-field>
+
+				<mat-form-field appearance="fill">
+					<mat-label>Type</mat-label>
+					<select matNativeControl [(ngModel)]="updatedValues && updatedValues.categorie">
+						<option value="HR">HR</option>
+						<option value="salesman">salesman</option>
+						<option value="admin">admin</option>
+					</select>
+				</mat-form-field>
+			</div>
+
+
+
+		</div>
+		<mat-divider></mat-divider>
+		<div class="modalBtn__container">
+			<button (click)="showCloseUpdateModal();" mat-button color="warn">Cancel</button>
+			<button mat-button color="primary"
+				(click)="updateUser(this.activeUser.username, this.updatedValues); showCloseUpdateModal();">
+				Save
+			</button>
+		</div>
+
+	</div>
+</div>

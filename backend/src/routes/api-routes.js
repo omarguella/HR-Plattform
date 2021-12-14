@@ -20,8 +20,8 @@ router.route("/user")
     .post(checkAuthorization(true), userApi.create)
 router.route("/user/:username")
     .get(checkAuthorization(false), userApi.getOne)
-    .put(checkAuthorization(false), userApi.update)
-    .delete(checkAuthorization(false), userApi.delete)
+    .put(checkAuthorization(true), userApi.update)
+    .delete(checkAuthorization(true), userApi.delete)
 
 //.get(checkAuthorization(false), userApi.getSelf)
 

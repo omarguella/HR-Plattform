@@ -1,5 +1,7 @@
+import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { MatCheckboxModule } from '@angular/material/checkbox'; 
 
 import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
@@ -35,6 +37,7 @@ import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component'
     ExamplePageComponent,
     NotFoundPageComponent,
     SalesmanComponent,
+    UsersPageComponent,
     SidebarComponent,
     SocialrecordComponent,
     BonussalaryComponent
@@ -52,7 +55,8 @@ import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component'
         MatIconModule,
         MatSidenavModule,
         MatTableModule,
-        MatDividerModule
+        MatDividerModule,
+        MatCheckboxModule
     ],
   providers: [],
   bootstrap: [ AppComponent ]

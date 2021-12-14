@@ -61,7 +61,7 @@ exports.create = async function (req, res) {
         lastname,
         email,
         password,
-        isAdmin
+        categorie
     } = req.body;
 
     const newUser = new user(
@@ -70,7 +70,7 @@ exports.create = async function (req, res) {
         lastname,
         email,
         password,
-        isAdmin);
+        categorie);
 
     const _u = await userService.get(db, newUser.username);
 
