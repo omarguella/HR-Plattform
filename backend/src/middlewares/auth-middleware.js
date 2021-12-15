@@ -6,8 +6,9 @@
  */
 exports.checkAuthorization = (beAdmin) => {
     return (req, res, next) => {
-        if(req.session.authenticated){ //check if session was marked as authenticated
-            if(!beAdmin || req.session.user.isAdmin){ //check if admin-requirement is met
+        if (req.session.authenticated) { //check if session was marked as authenticated
+            const isAdmin = req.session.user.categorie;
+            if (!beAdmin || (isAdmin.toUpperCase() == "ADMIN")) { //check if admin-requirement is met
                 next(); //proceed with next middleware or handler
                 return;
             }

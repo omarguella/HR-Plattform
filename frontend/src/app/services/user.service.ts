@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 	providedIn: 'root'
 })
 export class UserService {
+	baseUrl = '/api/user';
 
 	constructor(private http: HttpClient) {
 	}
@@ -21,4 +22,29 @@ export class UserService {
 		return this.http.get<User>('/api/user');
 		// use angular's integrated HTTP-client to make a get request; handle the response as a User object
 	}
+
+	getUsers(): Observable<User[]> {
+		return this.http.get<User[]>(this.baseUrl, { observe: 'body', withCredentials: true });
+	}
+
+	getUserBySid(username: string): Observable<User> {
+		return this.http.get<User>(`${this.baseUrl}/${username}`, { observe: 'body', withCredentials: true });
+	}
+
+	createUser(s: User): Observable<User> {
+		return this.http.post<User>(this.baseUrl, s, { observe: 'body', withCredentials: true });
+	}
+
+	deleteUser(username: string): Observable<User> {
+		return this.http.delete<User>(`${ this.baseUrl }/${ username }`, { observe: 'body', withCredentials: true });
+	}
+
+	updateUser(username: string, updatedValues: User): Observable<User> {
+		return this.http.put<User>(`${ this.baseUrl }/${ username }`, updatedValues, { observe: 'body', withCredentials: true });
+	}
+
+	synchronize(): Observable<void> {
+		return this.http.get<void>('/api/orangehrm', { withCredentials: true });
+	}
+
 }

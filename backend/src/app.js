@@ -16,7 +16,9 @@ const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 
 
-const {synchronizeSalesmen} = require("./services/orange-hrm-service");
+const {
+    synchronizeSalesmen
+} = require("./services/orange-hrm-service");
 
 // MongoDB connection details:
 const domain = 'localhost';
@@ -26,7 +28,9 @@ const password = '';
 const databaseName = 'intArch';
 
 app.use(express.json()); //adds support for json encoded bodies
-app.use(express.urlencoded({extended: true})); //adds support url encoded bodies
+app.use(express.urlencoded({
+    extended: true
+})); //adds support url encoded bodies
 app.use(upload.array()); //adds support multipart/form-data bodies
 app.use(cors({
     origin: "http://localhost:4200",
@@ -42,7 +46,7 @@ app.use(session({
     }
 }));
 
-const apiRouter = require('./routes/api-routes');//get api-router from routes/api
+const apiRouter = require('./routes/api-routes'); //get api-router from routes/api
 app.use('/api', apiRouter); //mount api-router at path "/api"
 // !!!! attention all middlewares, mounted after the router wont be called for any requests
 
@@ -71,11 +75,10 @@ async function initDb(db) {
         const User = require("./models/User");
 
         const adminPassword = crypto.randomBytes(8).toString('base64');
-        await userService.add(db, new User('admin', '', 'admin', '', adminPassword, true));
+        await userService.add(db, new User('admin', '', 'admin', '', adminPassword, 'admin'));
 
         console.log('created admin user with password: ' + adminPassword);
     }
 
     await synchronizeSalesmen(db);
 }
-
