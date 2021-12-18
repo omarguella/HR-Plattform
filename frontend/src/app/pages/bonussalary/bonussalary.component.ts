@@ -8,6 +8,7 @@ import { MatTable } from '@angular/material/table';
 import { OpenCrxService } from '../../services/open-crx.service';
 import { SingleOrder } from '../../models/Order';
 import { Bonussalary } from '../../models/Bonussalary';
+import { BonussalaryService } from '../../services/bonussalary.service';
 
 @Component({
 	selector: 'app-bonussalary',
@@ -38,7 +39,8 @@ export class BonussalaryComponent implements OnInit {
 		private route: ActivatedRoute,
 		private salesmanService: SalesmanService,
 		private socialRecordService: SocialRecordService,
-		private openCrxService: OpenCrxService
+		private openCrxService: OpenCrxService,
+		private bonussalaryService: BonussalaryService
 	) {
 	}
 
@@ -132,8 +134,8 @@ export class BonussalaryComponent implements OnInit {
 			return;
 		}
 
-		this.salesmanService
-			.addBonusSalary(new Bonussalary(this.sid, this.yearOfPerformance, this.bonusTotal))
+		this.bonussalaryService
+			.addBonusSalary(new Bonussalary(this.sid, this.yearOfPerformance, this.bonusTotal, this.remarks))
 			.subscribe(() => {
 				this.showNotification = true;
 				setTimeout(() => this.showNotification = false, 3000);

@@ -39,7 +39,7 @@ exports.getAll = async function (db) {
 /**
  * updates a unique user by uid
  * @param db target database
- * @param {number} uid
+ * @param {string} username
  * @param {User} user
  * @return {Promise<User>}
  */
@@ -48,8 +48,6 @@ exports.update = async function (db, username, user) {
     const filter = {
         "username": username
     };
-
-    user.password = hashPassword(user.password);
 
     const newValues = {
         $set: user
@@ -78,7 +76,6 @@ exports.delete = async function (db, username) {
     db.collection('users').deleteOne(filter);
 
 }
-
 
 /**
  * verifies provided credentials against a database

@@ -18,7 +18,7 @@ export class SalesmanService {
 	}
 
 	getSalesmanBySid(sid: number): Observable<Salesman> {
-		return this.http.get<Salesman>(`${this.baseUrl}/${sid}`, { observe: 'body', withCredentials: true });
+		return this.http.get<Salesman>(`${ this.baseUrl }/${ sid }`, { observe: 'body', withCredentials: true });
 	}
 
 	createSalesman(s: Salesman): Observable<Salesman> {
@@ -37,7 +37,4 @@ export class SalesmanService {
 		return this.http.get<void>('/api/orangehrm', { withCredentials: true });
 	}
 
-	addBonusSalary(bonussalary: Bonussalary): Observable<void> {
-		return this.http.post<void>('/api/orangehrm', bonussalary, { withCredentials: true });
-	}
 }

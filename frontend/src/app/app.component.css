@@ -3,9 +3,25 @@ main{
   width: 100%;
   min-height: calc(100vh - 64px);
   margin-top: 64px;
-  display: grid;
-  position: relative;
 }
+
+main.loggedin {
+	display: grid;
+	grid-template-areas: "sidenav main";
+	grid-template-columns: 1fr 7fr;
+	position: relative;
+}
+
+app-sidebar {
+	grid-area: sidenav;
+}
+
+.main-content {
+	grid-area: main;
+	padding: 20px;
+}
+
+
 
 
 

@@ -26,6 +26,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SocialrecordComponent } from './pages/socialrecord/socialrecord.component';
 import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { OpenBonussalariesComponent } from './pages/open-bonussalaries/open-bonussalaries.component';
+import { ClosedBonussalariesComponent } from './pages/closed-bonussalaries/closed-bonussalaries.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,10 @@ import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component'
     UsersPageComponent,
     SidebarComponent,
     SocialrecordComponent,
-    BonussalaryComponent
+    BonussalaryComponent,
+    ProfileComponent,
+    OpenBonussalariesComponent,
+    ClosedBonussalariesComponent
   ],
     imports: [
         BrowserModule,

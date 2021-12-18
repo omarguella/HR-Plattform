@@ -32,7 +32,7 @@ exports.getBySidAndYear = async function (db, sid, year) {
     return (await db.collection('socialRecords').find({
         "sid": sid,
         "year": year
-    }).toArray());
+    }).sort({year:1}).toArray());
 }
 
 /**

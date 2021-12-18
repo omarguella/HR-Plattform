@@ -6,20 +6,20 @@
 	<div class="card-body">
 		<table mat-table [dataSource]="salesmen" class="mat-elevation-z8">
 			<ng-container matColumnDef="code">
-				<th mat-header-cell *matHeaderCellDef >Code</th>
-				<td mat-cell *matCellDef="let element"> {{element.code}} </td>
+				<th mat-header-cell *matHeaderCellDef>Code</th>
+				<td mat-cell *matCellDef="let element"> {{element["code"]}} </td>
 			</ng-container>
 			<ng-container matColumnDef="firstname">
 				<th mat-header-cell *matHeaderCellDef> Firstname</th>
-				<td mat-cell *matCellDef="let element">{{element.firstname}} </td>
+				<td mat-cell *matCellDef="let element">{{element["firstname"]}} </td>
 			</ng-container>
 			<ng-container matColumnDef="lastname">
 				<th mat-header-cell *matHeaderCellDef> Lastname</th>
-				<td mat-cell *matCellDef="let element">{{element.lastname}} </td>
+				<td mat-cell *matCellDef="let element">{{element["lastname"]}} </td>
 			</ng-container>
 			<ng-container matColumnDef="department">
 				<th mat-header-cell *matHeaderCellDef> Department</th>
-				<td mat-cell *matCellDef="let element">{{element.department}} </td>
+				<td mat-cell *matCellDef="let element">{{element["department"]}} </td>
 			</ng-container>
 			<ng-container matColumnDef="action">
 				<th mat-header-cell *matHeaderCellDef> Action</th>
@@ -28,10 +28,10 @@
 					<button (click)="handleDeleteClick(element)" mat-raised-button color="warn"
 									class="actionBtn">DELETE
 					</button>
-					<button routerLink="/socialrecord/{{element.sid}}" mat-raised-button color="accent"
+					<button routerLink="/socialrecord/{{element['sid']}}" mat-raised-button color="accent"
 									class="actionBtn">Social Records
 					</button>
-					<button routerLink="/bonussalary/{{element.sid}}" mat-raised-button>Bonus Salary</button>
+					<button routerLink="/bonussalary/{{element['sid']}}" mat-raised-button>Bonus Salary</button>
 				</td>
 			</ng-container>
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

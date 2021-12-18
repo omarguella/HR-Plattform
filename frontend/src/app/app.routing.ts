@@ -9,6 +9,9 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
 import { SalesmanComponent } from './pages/salesman/salesman.component';
 import { SocialrecordComponent } from './pages/socialrecord/socialrecord.component';
 import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { OpenBonussalariesComponent } from './pages/open-bonussalaries/open-bonussalaries.component';
+import { ClosedBonussalariesComponent } from './pages/closed-bonussalaries/closed-bonussalaries.component';
 
 /*
   This array holds the relation of paths and components which angular router should resolve.
@@ -26,6 +29,9 @@ const routes: Routes = [
 	{ path: 'users', component: UsersPageComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'socialrecord/:sid', component: SocialrecordComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'bonussalary/:sid', component: BonussalaryComponent, canActivate: [ AuthGuardService ] },
+	{path: 'opensalaries', component: OpenBonussalariesComponent, canActivate: [ AuthGuardService ] },
+	{path: 'mysalaries', component: ClosedBonussalariesComponent, canActivate: [ AuthGuardService ] },
+	{path: 'profile', component: ProfileComponent, canActivate: [ AuthGuardService ] },
 	{ path: '', component: LandingPageComponent, canActivate: [ AuthGuardService ] },
 	{ path: '**', component: NotFoundPageComponent } // these entries are matched from top to bottom => not found should be the last entry
 ];

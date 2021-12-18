@@ -1,0 +1,30 @@
+:host {
+	display: flex;
+	justify-content: center;
+}
+
+.profile {
+	width: 70%;
+}
+
+.profile .container {
+	display: flex;
+	justify-content: space-around;
+}
+
+
+
+.profile .fields {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.profile .fields button {
+	width: 200px;
+	align-self: flex-end;
+}
+
+.profile mat-form-field {
+	margin: 0 10px;
+}

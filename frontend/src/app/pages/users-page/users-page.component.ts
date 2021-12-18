@@ -1,22 +1,22 @@
-import { User } from './../../models/User';
-import { UserService } from './../../services/user.service';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { User } from '../../models/User';
+import { UserService } from '../../services/user.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 
 @Component({
-  selector: 'app-users-page',
-  templateUrl: './users-page.component.html',
-  styleUrls: ['./users-page.component.css']
+	selector: 'app-users-page',
+	templateUrl: './users-page.component.html',
+	styleUrls: [ './users-page.component.css' ]
 })
 export class UsersPageComponent implements OnInit {
 
-  users: User[] = [];
+	users: User[] = [];
 
 	activeUser: User; // the clicked salesman needed for the modal
 	updatedValues: User;
 
 	@ViewChild(MatTable) table: MatTable<User>;
-	displayedColumns: string[] = [ 'username', 'firstname', 'lastname','email','categorie', 'action' ];
+	displayedColumns: string[] = [ 'username', 'firstname', 'lastname', 'email', 'role', 'action' ];
 
 	newUser: User;
 	hasError = false;
@@ -30,7 +30,7 @@ export class UsersPageComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getUser();
-		this.newUser = new User( undefined, undefined, undefined, undefined,undefined,undefined);
+		this.newUser = new User(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
 	}
 
 	getUser(): void {
@@ -42,7 +42,7 @@ export class UsersPageComponent implements OnInit {
 	}
 
 	createUser(): Promise<void> {
-		if ( !this.newUser.username || !this.newUser.firstname || !this.newUser.lastname) {
+		if (!this.newUser.username || !this.newUser.firstname || !this.newUser.lastname) {
 			this.hasError = true;
 			return;
 		}
@@ -72,21 +72,11 @@ export class UsersPageComponent implements OnInit {
 				this.users = this.users.map((s) => s.username === username ? data : s);
 				this.getUser();
 			});
-			
-	}
 
-	synchronizeUser(): void {
-		this.usersService
-			.synchronize()
-			.subscribe(
-				() => {
-					window.location.reload();
-				}
-			);
 	}
 
 	resetFields(): void {
-		this.newUser = new User(undefined, undefined, undefined, undefined, undefined,undefined);
+		this.newUser = new User(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
 		this.hasError = false;
 	}
 
@@ -100,14 +90,14 @@ export class UsersPageComponent implements OnInit {
 		modal.classList.toggle('active');
 	}
 
-	handleDeleteClick(s: User): void {
-		this.activeUser = { ...s };
+	handleDeleteClick(u: User): void {
+		this.activeUser = { ...u };
 		this.showCloseDeleteModal();
 	}
 
-	handleEditClick(s: User): void {
-		this.activeUser = { ...s };
-		this.updatedValues = { ...s };
+	handleEditClick(u: User): void {
+		this.activeUser = { ...u };
+		this.updatedValues = { ...u };
 		this.showCloseUpdateModal();
 	}
 }

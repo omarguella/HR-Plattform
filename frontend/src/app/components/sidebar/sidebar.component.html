@@ -1,44 +1,68 @@
-<mat-drawer-container>
-	<mat-drawer mode="side" opened>
-		<div class="menu-group">
-			<button class="sidenav-menu-button arrow mb-4" mat-raised-button routerLinkActive="active"
-							[routerLinkActiveOptions]="{exact: true}" routerLink="/salesman">
-				Salesman Manager
-			</button>
-		</div>
-		<div class="menu-group">
-			<button class="sidenav-menu-button" mat-raised-button>
-				OpenCRX Overview
-			</button>
-			<button class="sidenav-button arrow" mat-raised-button routerLinkActive="active"
-							[routerLinkActiveOptions]="{exact: true}" routerLink="/products">
-				Products
-			</button>
-			<button class="sidenav-button arrow" mat-raised-button routerLinkActive="active"
-							[routerLinkActiveOptions]="{exact: true}" routerLink="/customers">
-				Customers
-			</button>
-			<button class="sidenav-button arrow" mat-raised-button routerLinkActive="active"
-							[routerLinkActiveOptions]="{exact: true}" routerLink="/sales">
-				Sales
-			</button>
-		</div>
+<div class="sidenav">
+	<div class="menu-group" *ngIf="user && user.role === ROLES.ADMIN">
+		<button class="sidenav-menu-button" mat-raised-button>
+			Salesman Manager
+		</button>
+		<button class="sidenav-button arrow mb-4" color="primary" mat-flat-button routerLinkActive="active"
+						[routerLinkActiveOptions]="{exact: true}" routerLink="/salesman">
+			Salesmen
+		</button>
+	</div>
+	<div class="menu-group" *ngIf="user && user.role === ROLES.HR">
+		<button class="sidenav-menu-button" mat-raised-button>
+			OrangeHRM
+		</button>
+		<button class="sidenav-button arrow mb-4" color="primary" mat-flat-button routerLinkActive="active"
+						[routerLinkActiveOptions]="{exact: true}" routerLink="/opensalaries">
+			Open Bonus Salaries
+		</button>
+	</div>
+	<div class="menu-group" *ngIf="user && user.role === ROLES.SALESMAN">
+		<button class="sidenav-menu-button" mat-raised-button>
+			Performance
+		</button>
+		<button class="sidenav-button arrow" color="primary" mat-flat-button routerLinkActive="active"
+						[routerLinkActiveOptions]="{exact: true}" routerLink="/mysalaries">
+			Bonus Salaries
+		</button>
+		<button class="sidenav-button arrow" color="primary" mat-flat-button routerLinkActive="active"
+						[routerLinkActiveOptions]="{exact: true}" routerLink="/mysales">
+			My Sales
+		</button>
+	</div>
+	<div class="menu-group">
+		<button class="sidenav-menu-button" mat-raised-button>
+			OpenCRX Overview
+		</button>
+		<button class="sidenav-button arrow" color="primary" mat-flat-button routerLinkActive="active"
+						[routerLinkActiveOptions]="{exact: true}" routerLink="/products">
+			Products
+		</button>
+		<button class="sidenav-button arrow" color="primary" mat-flat-button routerLinkActive="active"
+						[routerLinkActiveOptions]="{exact: true}" routerLink="/customers">
+			Customers
+		</button>
+		<button *ngIf="user && user.role === ROLES.ADMIN"
+			class="sidenav-button arrow"
+			color="primary" mat-flat-button routerLinkActive="active"
+			[routerLinkActiveOptions]="{exact: true}" routerLink="/sales">
+			Sales
+		</button>
+	</div>
 
-		<div class="menu-group">
-			<button class="sidenav-menu-button" mat-raised-button>
-				User Manager
-			</button>
-			<button class="sidenav-button arrow" mat-raised-button routerLinkActive="active"
-							[routerLinkActiveOptions]="{exact: true}" routerLink="/profil">
-				Profil
-			</button>
-			<button class="sidenav-button arrow" mat-raised-button routerLinkActive="active"
-							[routerLinkActiveOptions]="{exact: true}" routerLink="/users">
-				Accounts
-			</button>
-		</div>
-	</mat-drawer>
-	<mat-drawer-content>
-		<router-outlet></router-outlet>
-	</mat-drawer-content>
-</mat-drawer-container>
+	<div class="menu-group" *ngIf="user && user.role === ROLES.ADMIN">
+		<button class="sidenav-menu-button" mat-raised-button>
+			User Manager
+		</button>
+		<button class="sidenav-button arrow" color="primary" mat-flat-button routerLinkActive="active"
+						[routerLinkActiveOptions]="{exact: true}" routerLink="/profile">
+			Profile
+		</button>
+		<button class="sidenav-button arrow"
+						color="primary" mat-flat-button routerLinkActive="active"
+						[routerLinkActiveOptions]="{exact: true}" routerLink="/users">
+			Accounts
+		</button>
+	</div>
+</div>
+

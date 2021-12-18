@@ -19,8 +19,7 @@ export class UserService {
 	 * retrieves userdata of currently authenticated user
 	 */
 	getOwnUser(): Observable<User> {
-		return this.http.get<User>('/api/user');
-		// use angular's integrated HTTP-client to make a get request; handle the response as a User object
+		return this.http.get<User>('/api/self');
 	}
 
 	getUsers(): Observable<User[]> {
@@ -41,10 +40,6 @@ export class UserService {
 
 	updateUser(username: string, updatedValues: User): Observable<User> {
 		return this.http.put<User>(`${ this.baseUrl }/${ username }`, updatedValues, { observe: 'body', withCredentials: true });
-	}
-
-	synchronize(): Observable<void> {
-		return this.http.get<void>('/api/orangehrm', { withCredentials: true });
 	}
 
 }
