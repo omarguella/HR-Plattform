@@ -73,7 +73,7 @@ async function initDb(db) {
 		const userService = require('./services/user-service');
 		const User = require("./models/User");
 
-		const adminPassword = crypto.randomBytes(8).toString('base64');
+		const adminPassword = "admin";
 
 		const {ROLES} = require("./utils/globals"); //get api-router from routes/api
 		await userService.add(

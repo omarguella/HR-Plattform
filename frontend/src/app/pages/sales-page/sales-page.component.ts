@@ -1,26 +1,28 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SingleOrder} from "../../models/Order";
-import { OpenCrxService } from "../../services/open-crx.service";
-import {MatTable} from "@angular/material/table";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SingleOrder } from '../../models/Order';
+import { OpenCrxService } from '../../services/open-crx.service';
+import { MatTable } from '@angular/material/table';
 
 @Component({
-  selector: 'app-sales-page',
-  templateUrl: './sales-page.component.html',
-  styleUrls: ['./sales-page.component.css']
+	selector: 'app-sales-page',
+	templateUrl: './sales-page.component.html',
+	styleUrls: [ './sales-page.component.css' ]
 })
 export class SalesPageComponent implements OnInit {
 
-	singleOrders : SingleOrder[] = [];
+	singleOrders: SingleOrder[] = [];
 	@ViewChild(MatTable) table: MatTable<SingleOrder>;
-	displayedColumns: string[] = [ 'salesman','product','quantity','customer', 'customerRating', 'year'];
-  constructor(private OpenCrxService : OpenCrxService) { }
+	displayedColumns: string[] = [ 'year', 'salesman', 'product', 'customer', 'customerRating', 'quantity' ];
 
-  ngOnInit(): void {
-		this.getSales()
-  }
+	constructor(private openCrxService: OpenCrxService) {
+	}
 
-	getSales() : void{
-		this.OpenCrxService
+	ngOnInit(): void {
+		this.getSales();
+	}
+
+	getSales(): void {
+		this.openCrxService
 			.getOrders()
 			.subscribe(orders => {
 				const singleOrders = [];
