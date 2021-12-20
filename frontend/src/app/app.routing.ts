@@ -12,6 +12,9 @@ import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component'
 import { ProfileComponent } from './pages/profile/profile.component';
 import { OpenBonussalariesComponent } from './pages/open-bonussalaries/open-bonussalaries.component';
 import { ClosedBonussalariesComponent } from './pages/closed-bonussalaries/closed-bonussalaries.component';
+import { ProductsComponent } from './pages/products/products.component';
+import { CustomersPageComponent } from './pages/customers-page/customers-page.component';
+import { SalesPageComponent } from './pages/sales-page/sales-page.component';
 
 /*
   This array holds the relation of paths and components which angular router should resolve.
@@ -25,13 +28,16 @@ import { ClosedBonussalariesComponent } from './pages/closed-bonussalaries/close
 const routes: Routes = [
 	{ path: 'login', component: LoginPageComponent },
 	{ path: 'example', component: ExamplePageComponent, canActivate: [ AuthGuardService ] },
+	{ path: 'products', component: ProductsComponent, canActivate: [ AuthGuardService ] },
+	{ path: 'customers', component: CustomersPageComponent, canActivate: [ AuthGuardService ] },
+	{ path: 'sales', component: SalesPageComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'salesman', component: SalesmanComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'users', component: UsersPageComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'socialrecord/:sid', component: SocialrecordComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'bonussalary/:sid', component: BonussalaryComponent, canActivate: [ AuthGuardService ] },
-	{path: 'opensalaries', component: OpenBonussalariesComponent, canActivate: [ AuthGuardService ] },
-	{path: 'mysalaries', component: ClosedBonussalariesComponent, canActivate: [ AuthGuardService ] },
-	{path: 'profile', component: ProfileComponent, canActivate: [ AuthGuardService ] },
+	{ path: 'opensalaries', component: OpenBonussalariesComponent, canActivate: [ AuthGuardService ] },
+	{ path: 'mysalaries', component: ClosedBonussalariesComponent, canActivate: [ AuthGuardService ] },
+	{ path: 'profile', component: ProfileComponent, canActivate: [ AuthGuardService ] },
 	{ path: '', component: LandingPageComponent, canActivate: [ AuthGuardService ] },
 	{ path: '**', component: NotFoundPageComponent } // these entries are matched from top to bottom => not found should be the last entry
 ];

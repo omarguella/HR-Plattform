@@ -1,7 +1,7 @@
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatCheckboxModule } from '@angular/material/checkbox'; 
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
@@ -29,43 +29,49 @@ import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component'
 import { ProfileComponent } from './pages/profile/profile.component';
 import { OpenBonussalariesComponent } from './pages/open-bonussalaries/open-bonussalaries.component';
 import { ClosedBonussalariesComponent } from './pages/closed-bonussalaries/closed-bonussalaries.component';
+import { ProductsComponent } from './pages/products/products.component';
+import { CustomersPageComponent } from './pages/customers-page/customers-page.component';
+import { SalesPageComponent } from './pages/sales-page/sales-page.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginPageComponent,
-    LoginComponent,
-    LandingPageComponent,
-    MenuBarComponent,
-    ExamplePageComponent,
-    NotFoundPageComponent,
-    SalesmanComponent,
-    UsersPageComponent,
-    SidebarComponent,
-    SocialrecordComponent,
-    BonussalaryComponent,
-    ProfileComponent,
-    OpenBonussalariesComponent,
-    ClosedBonussalariesComponent
-  ],
-    imports: [
-        BrowserModule,
-        AppRouting,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatInputModule,
-        MatButtonModule,
-        MatCardModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatTableModule,
-        MatDividerModule,
-        MatCheckboxModule
-    ],
-  providers: [],
-  bootstrap: [ AppComponent ]
+	declarations: [
+		AppComponent,
+		LoginPageComponent,
+		LoginComponent,
+		LandingPageComponent,
+		MenuBarComponent,
+		ExamplePageComponent,
+		NotFoundPageComponent,
+		SalesmanComponent,
+		UsersPageComponent,
+		ProductsComponent,
+		SidebarComponent,
+		SocialrecordComponent,
+		BonussalaryComponent,
+		ProfileComponent,
+		OpenBonussalariesComponent,
+		ClosedBonussalariesComponent,
+		CustomersPageComponent,
+		SalesPageComponent,
+	],
+	imports: [
+		BrowserModule,
+		AppRouting,
+		FormsModule,
+		HttpClientModule,
+		BrowserAnimationsModule,
+		MatInputModule,
+		MatButtonModule,
+		MatCardModule,
+		MatToolbarModule,
+		MatIconModule,
+		MatSidenavModule,
+		MatTableModule,
+		MatDividerModule,
+		MatCheckboxModule
+	],
+	providers: [],
+	bootstrap: [ AppComponent ]
 })
 export class AppModule {
 }
