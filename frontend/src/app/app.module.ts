@@ -1,7 +1,7 @@
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatCheckboxModule } from '@angular/material/checkbox'; 
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
@@ -26,6 +26,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SocialrecordComponent } from './pages/socialrecord/socialrecord.component';
 import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component';
+import { ProductsComponent } from './pages/products/products.component';
+import { CustomersPageComponent } from './pages/customers-page/customers-page.component'
 
 @NgModule({
   declarations: [
@@ -38,9 +40,11 @@ import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component'
     NotFoundPageComponent,
     SalesmanComponent,
     UsersPageComponent,
+		ProductsComponent,
     SidebarComponent,
     SocialrecordComponent,
-    BonussalaryComponent
+    BonussalaryComponent,
+    CustomersPageComponent
   ],
     imports: [
         BrowserModule,
