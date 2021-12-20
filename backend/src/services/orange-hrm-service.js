@@ -5,7 +5,7 @@ const Salesman = require("../models/Salesman");
 const FormData = require('form-data');
 const {COLLECTIONS} = require("../utils/globals");
 
-const getSalesmenFromOrange = async function () {
+exports.getSalesmenFromOrange = async function () {
 	try {
 		const employees = await axios.get(
 			`${ORANGE_BASE_URL}/symfony/web/index.php/api/v1/employee/search`,
@@ -21,10 +21,10 @@ const getSalesmenFromOrange = async function () {
 /**
  * imports All Salesmen from OrangeHRM
  * @param db target database
- * @return {Promise<void>}
+ * @return {Promise<Salesman[]>}
  */
 exports.synchronizeSalesmen = async function (db) {
-	const salesmen = await getSalesmenFromOrange();
+	const salesmen = await exports.getSalesmenFromOrange();
 	for (const s of salesmen) {
 		const salesman = new Salesman(
 			parseInt(s["employeeId"]),
@@ -41,6 +41,8 @@ exports.synchronizeSalesmen = async function (db) {
 			await salesmanService.update(db, salesman.sid, salesman);
 		}
 	}
+
+	return salesmen;
 }
 
 /**
