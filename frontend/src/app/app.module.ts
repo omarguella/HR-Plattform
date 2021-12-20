@@ -27,7 +27,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SocialrecordComponent } from './pages/socialrecord/socialrecord.component';
 import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component';
 import { ProductsComponent } from './pages/products/products.component';
-import { CustomersPageComponent } from './pages/customers-page/customers-page.component'
+import { CustomersPageComponent } from './pages/customers-page/customers-page.component';
+import { SalesPageComponent } from './pages/sales-page/sales-page.component'
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { CustomersPageComponent } from './pages/customers-page/customers-page.co
     SidebarComponent,
     SocialrecordComponent,
     BonussalaryComponent,
-    CustomersPageComponent
+    CustomersPageComponent,
+    SalesPageComponent
   ],
     imports: [
         BrowserModule,

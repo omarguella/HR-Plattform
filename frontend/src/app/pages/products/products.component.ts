@@ -13,7 +13,7 @@ export class ProductsComponent implements OnInit {
 	products: Product[] = [];
 
 	@ViewChild(MatTable) table: MatTable<Product>;
-	displayedColumns: string[] = ['id', 'name', 'description', 'productnumber'];
+	displayedColumns: string[] = [ 'name', 'description', 'productnumber'];
 
 	@ViewChild('deleteModal') deleteModal: any;
 	@ViewChild('updateModal') updateModal: any;

@@ -10,6 +10,8 @@ import { SalesmanComponent } from './pages/salesman/salesman.component';
 import { SocialrecordComponent } from './pages/socialrecord/socialrecord.component';
 import { BonussalaryComponent } from './pages/bonussalary/bonussalary.component';
 import { ProductsComponent } from './pages/products/products.component';
+import { CustomersPageComponent } from './pages/customers-page/customers-page.component';
+import { SalesPageComponent} from "./pages/sales-page/sales-page.component";
 
 /*
   This array holds the relation of paths and components which angular router should resolve.
@@ -24,6 +26,8 @@ const routes: Routes = [
 	{ path: 'login', component: LoginPageComponent },
 	{ path: 'example', component: ExamplePageComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'products', component: ProductsComponent, canActivate : [AuthGuardService]},
+	{ path: 'customers', component: CustomersPageComponent, canActivate : [AuthGuardService]},
+	{ path: 'sales', component: SalesPageComponent, canActivate : [AuthGuardService]},
 	{ path: 'salesman', component: SalesmanComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'users', component: UsersPageComponent, canActivate: [ AuthGuardService ] },
 	{ path: 'socialrecord/:sid', component: SocialrecordComponent, canActivate: [ AuthGuardService ] },

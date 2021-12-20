@@ -13,7 +13,7 @@ export class CustomersPageComponent implements OnInit {
 	customers: Customer[] = [];
 
 	@ViewChild(MatTable) table: MatTable<Customer>;
-	displayedColumns: string[] = ['id', 'fullname', 'rating'];
+	displayedColumns: string[] = ['fullname', 'rating'];
 
   constructor(private OpenCrxService: OpenCrxService) { }
 
@@ -27,5 +27,18 @@ export class CustomersPageComponent implements OnInit {
 			.subscribe(data => {
 				this.customers = data;
 			});
+	}
+
+	ratingToString(rating: number): string {
+		switch (rating) {
+			case 1:
+				return 'Excellent';
+			case 2:
+				return 'Very Good';
+			case 3:
+				return 'Good';
+			default:
+				return 'OK';
+		}
 	}
 }
