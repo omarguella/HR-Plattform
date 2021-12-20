@@ -42,7 +42,7 @@
 						[routerLinkActiveOptions]="{exact: true}" routerLink="/customers">
 			Customers
 		</button>
-		<button *ngIf="user && user.role === ROLES.ADMIN"
+		<button *ngIf="user && (user.role === ROLES.ADMIN || user.role === ROLES.HR)"
 			class="sidenav-button arrow"
 			color="primary" mat-flat-button routerLinkActive="active"
 			[routerLinkActiveOptions]="{exact: true}" routerLink="/sales">

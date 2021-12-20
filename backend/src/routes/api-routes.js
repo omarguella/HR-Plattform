@@ -65,6 +65,6 @@ router.get('/opencrx/customer', customerApi.getAll);
 router.get('/opencrx/customer/:id', customerApi.getById);
 
 const orderApi = require('../apis/order-api');
-router.get('/opencrx/order', checkAuthorization([ROLES.ADMIN]), orderApi.getAll);
+router.get('/opencrx/order', checkAuthorization([ROLES.ADMIN, ROLES.HR]), orderApi.getAll);
 
 module.exports = router;
