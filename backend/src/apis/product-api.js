@@ -7,6 +7,8 @@ const productService = require('../services/product-service');
  */
 exports.getAll = async function (req, res) {
 	res.json(await productService.get());
+
+	// #swagger.tags = ['OpenCRX Products']
 }
 
 /**
@@ -18,4 +20,6 @@ exports.getAll = async function (req, res) {
 exports.getById = async function(req, res) {
 	const id = req.params.id;
 	res.json(await productService.getById(id));
+
+	// #swagger.tags = ['OpenCRX Products']
 }

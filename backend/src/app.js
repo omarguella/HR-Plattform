@@ -15,6 +15,9 @@ const crypto = require('crypto');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
+
 const {
 	synchronizeSalesmen
 } = require("./services/orange-hrm-service");
@@ -26,6 +29,7 @@ const username = '';
 const password = '';
 const databaseName = 'intArch';
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json()); //adds support for json encoded bodies
 app.use(express.urlencoded({
 	extended: true

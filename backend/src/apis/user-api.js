@@ -9,6 +9,8 @@ const user = require("../models/User");
  */
 exports.getSelf = async function (req, res) {
 	res.json(req.session.user); //retrieve userdata of authenticated user from session and return it
+
+	// #swagger.tags = ['User']
 }
 
 /**
@@ -20,6 +22,8 @@ exports.getSelf = async function (req, res) {
 exports.getAll = async function (req, res) {
 	const db = req.app.get('db');
 	res.json(await userService.getAll(db));
+
+	// #swagger.tags = ['User']
 }
 
 /**
@@ -40,6 +44,8 @@ exports.getOne = async function (req, res) {
 	} else {
 		res.json(user);
 	}
+
+	// #swagger.tags = ['User']
 }
 
 /**
@@ -81,6 +87,31 @@ exports.create = async function (req, res) {
 		await userService.add(db, newUser);
 		res.status(201).json({message: `created User with username ${newUser.username}`});
 	}
+
+	// #swagger.tags = ['User']
+}
+
+/**
+ * endpoint, to delete user
+ * @param req express request
+ * @param res express response
+ * @return {Promise<void>}
+ */
+exports.delete = async function (req, res) {
+	const username = req.params.username;
+	const db = req.app.get('db');
+	const user = await userService.get(db, username);
+	if (user != null) {
+		await userService.delete(db, username);
+		res.status(200).json(user);
+	} else {
+		res.status(404).json({
+			message: 'User not found'
+		})
+	}
+
+	// #swagger.tags = ['User']
+
 }
 
 /**
@@ -105,25 +136,9 @@ exports.update = async function (req, res) {
 	}
 
 	await userService.update(db, username, updatedValues);
-	res.status(200).json(updatedValues);;
+	res.status(200).json(updatedValues);
+
+	// #swagger.tags = ['User']
 }
 
-/**
- * endpoint, to delete user
- * @param req express request
- * @param res express response
- * @return {Promise<void>}
- */
-exports.delete = async function (req, res) {
-	const username = req.params.username;
-	const db = req.app.get('db');
-	const user = await userService.get(db, username);
-	if (user != null) {
-		await userService.delete(db, username);
-		res.status(200).json(user);
-	} else {
-		res.status(404).json({
-			message: 'User not found'
-		})
-	}
-}
+

@@ -5,12 +5,16 @@ exports.synchronize = async function(req, res) {
 	const db = req.app.get('db');
 	await orangeHrmService.synchronizeSalesmen(db);
 	res.json({success: true});
+
+	// #swagger.tags = ['OrangeHRM']
 }
 
 exports.getAllBonussalaries = async function(req, res) {
 	const db = req.app.get('db');
 	const result = await orangeHrmService.getAll(db);
 	res.json(result);
+
+	// #swagger.tags = ['OrangeHRM']
 }
 
 exports.getAllBySid = async function(req, res) {
@@ -18,6 +22,8 @@ exports.getAllBySid = async function(req, res) {
 	const sid = parseInt(req.params.sid);
 	const result = await orangeHrmService.getAllBySid(db, sid);
 	res.json(result);
+
+	// #swagger.tags = ['OrangeHRM']
 }
 
 exports.confirmBonussalary = async function(req, res) {
@@ -35,7 +41,9 @@ exports.confirmBonussalary = async function(req, res) {
 	_bs.isOpen = false;
 	orangeHrmService.updateBonussalary(db, _bs); // update status to closed in MongDB
 	orangeHrmService.confirmBonussalary(sid, year, value); // update values in orangeHRM
-	res.json({success: true})
+	res.json({success: true});
+
+	// #swagger.tags = ['OrangeHRM']
 }
 
 exports.addBonussalary = async function(req, res) {
@@ -54,4 +62,6 @@ exports.addBonussalary = async function(req, res) {
 	}
 
 	res.json({success: true});
+
+	// #swagger.tags = ['OrangeHRM']
 }

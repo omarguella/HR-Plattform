@@ -25,3 +25,11 @@ button.menu-button.active{
 button.menu-button.active:hover{
   background: rgba(255,255,255,0.1);
 }
+
+button a,
+button a:active,
+button a:visited,
+button a:hover {
+	color: white;
+	text-decoration: none;
+}

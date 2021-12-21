@@ -1,6 +1,11 @@
 <app-menu-bar *ngIf="isLoggedIn"></app-menu-bar>
 <main [ngClass]="isLoggedIn ? 'loggedin' : ''">
 	<app-sidebar *ngIf="isLoggedIn"></app-sidebar>
-	<div class="main-content"><router-outlet></router-outlet></div>
+	<div class="main-content">
+		<router-outlet></router-outlet>
+		<button class="menu-button api" mat-flat-button color="primary">
+			<a href="http://localhost:8080/api-docs" target="_blank">API Docs</a>
+		</button>
+	</div>
 </main>
 

@@ -25,4 +25,6 @@ exports.getAll = async function (req, res) {
 		res.json(await orderService.get(db));
 	}
 
+	// #swagger.tags = ['OpenCRX Orders']
+
 }

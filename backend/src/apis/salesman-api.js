@@ -10,6 +10,8 @@ const Salesman = require("../models/Salesman");
 exports.getAll = async function (req, res) {
     const db = req.app.get('db');
     res.json(await salesmanService.get(db));
+
+    // #swagger.tags = ['Salesman']
 }
 
 /**
@@ -29,6 +31,7 @@ exports.getBySid = async function (req, res) {
         res.json(salesman);
     }
 
+    // #swagger.tags = ['Salesman']
 }
 
 /**
@@ -51,6 +54,8 @@ exports.create = async function (req, res) {
         await salesmanService.create(db, newSalesman);
         res.status(201).json(await salesmanService.getBySid(db, newSalesman.sid))
     }
+
+    // #swagger.tags = ['Salesman']
 }
 
 /**
@@ -72,7 +77,9 @@ exports.updateBySid = async function (req, res) {
     }
 
     await salesmanService.update(db, sid, updatedValues);
-    res.status(200).json(updatedValues)
+    res.status(200).json(updatedValues);
+
+    // #swagger.tags = ['Salesman']
 }
 
 /**
@@ -91,4 +98,6 @@ exports.deleteBySid = async function (req, res) {
     } else {
         res.status(404).json({message: 'Salesman not found'})
     }
+
+    // #swagger.tags = ['Salesman']
 }

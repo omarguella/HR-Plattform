@@ -8,9 +8,13 @@ const customerService = require("../services/customer-service");
  */
 exports.getAll = async function (req, res) {
 	res.json(await customerService.get());
+
+	// #swagger.tags = ['OpenCRX Customers']
 }
 
 exports.getById = async function(req, res) {
 	const id = req.params.id;
 	res.json(await customerService.getById(id));
+
+	// #swagger.tags = ['OpenCRX Customers']
 }

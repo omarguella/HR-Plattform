@@ -1,5 +1,6 @@
 const userService = require('../services/user-service');
 const authService = require('../services/auth-service');
+const Credentials = require("../models/Credentials");
 
 /**
  * endpoint, which handles login
@@ -9,13 +10,15 @@ const authService = require('../services/auth-service');
  */
 exports.login = function (req, res){
     const db = req.app.get('db');//get database from express
-
-    userService.verify(db, req.body).then(user=> { //verify credentials via user-service
+    const credentials = new Credentials(req.body.username, req.body.password);
+    userService.verify(db, credentials).then(user=> { //verify credentials via user-service
         authService.authenticate(req.session, user); //mark session as authenticated
         res.send('login successful');
     }).catch(_=>{
         res.status(401).send('login failed');
     })
+
+    // #swagger.tags = ['Login']
 }
 
 /**
@@ -27,6 +30,8 @@ exports.login = function (req, res){
 exports.logout = function (req, res){
     authService.deAuthenticate(req.session); //destroy session
     res.send('logout successful');
+
+    // #swagger.tags = ['Login']
 }
 
 /**
@@ -41,4 +46,6 @@ exports.isLoggedIn = function (req, res){
     }else {
         res.send({loggedIn: false});
     }
+
+    // #swagger.tags = ['Login']
 }
