@@ -13,11 +13,12 @@ exports.getAll = async function (req, res) {
     const result = await socialRecordService.get(db);
 
     if (!sid) {
-        res.json(result);
+        res.status(200).json(result);
     } else {
-        res.json(result.filter((sr) => sr.sid === sid));
+        res.status(200).json(result.filter((sr) => sr.sid === sid));
     }
 
+    // #swagger.tags = ['Social Record']
 }
 
 /**
@@ -31,7 +32,9 @@ exports.getBySid = async function (req, res) {
     const sid = parseInt(req.params.sid);
     const SocialRecords = await socialRecordService.getBySid(db, sid);
 
-    res.json(SocialRecords);
+    res.status(200).json(SocialRecords);
+
+    // #swagger.tags = ['Social Record']
 }
 
 /**
@@ -46,7 +49,9 @@ exports.getBySidAndYear = async function (req, res) {
     const year = parseInt(req.params.year);
     const SocialRecords = await socialRecordService.getBySidAndYear(db, sid, year);
 
-    res.json(SocialRecords);
+    res.status(200).json(SocialRecords);
+
+    // #swagger.tags = ['Social Record']
 }
 
 /**
@@ -64,8 +69,10 @@ exports.getById = async function (req, res) {
     if (SocialRecord) {
         res.json(SocialRecord);
     } else {
-        res.status(404).send()
+        res.status(404).json({message: 'Not Found'})
     }
+
+    // #swagger.tags = ['Social Record']
 }
 
 /**
@@ -91,6 +98,8 @@ exports.create = async function (req, res) {
 
     const id = await socialRecordService.create(db, newSocialRecord);
     res.status(201).json(newSocialRecord);
+
+    // #swagger.tags = ['Social Record']
 }
 
 /**
@@ -107,11 +116,13 @@ exports.update = async function (req, res) {
     const _sr = await socialRecordService.getById(db, _id);
 
     if(!_sr) {
-        res.status(404).send()
+        res.status(404).json({message: "Not Found"})
     } else {
         await socialRecordService.update(db, _id, newSocialRecord);
         res.json({_id, ...newSocialRecord});
     }
+
+    // #swagger.tags = ['Social Record']
 }
 
 /**
@@ -124,8 +135,9 @@ exports.deleteAllBySid = async function (req, res) {
     const sid = parseInt(req.params.sid);
     const db = req.app.get('db');
     await socialRecordService.deleteAllBySid(db, sid);
-    res.send("SocialRecords for " + sid + " are deleted");
+    res.json({message: "SocialRecords for " + sid + " are deleted"});
 
+    // #swagger.tags = ['Social Record']
 }
 
 /**
@@ -139,7 +151,9 @@ exports.deleteBySidAndYear = async function (req, res) {
     const year = parseInt(req.params.year);
     const db = req.app.get('db');
     await socialRecordService.deleteBySidAndYear(db, sid, year);
-    res.send("SocialRecords for " + sid + " are deleted");
+    res.json({message: "SocialRecords for " + sid + " are deleted"});
+
+    // #swagger.tags = ['Social Record']
 }
 
 /**
@@ -156,8 +170,10 @@ exports.deleteById = async function (req, res) {
 
     if (_sr !== null) {
         console.log(await socialRecordService.deleteById(db, _id));
-        res.status(200).send({message: 'Social Record deleted'});
+        res.status(200).json({message: 'Social Record deleted'});
     } else {
-        res.status(404).send({message: 'Social Record not found'});
+        res.status(404).json({message: 'Social Record not found'});
     }
+
+    // #swagger.tags = ['Social Record']
 }
