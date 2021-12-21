@@ -75,7 +75,9 @@ export class SocialrecordComponent implements OnInit {
 	updateSocialRecord(id: string, newValues: Socialrecord): void {
 		this.socialRecordService
 			.updateSocialRecord(id, newValues)
-			.subscribe();
+			.subscribe(() => {
+				window.location.reload();
+			});
 	}
 
 	addSocialRecord(): void {

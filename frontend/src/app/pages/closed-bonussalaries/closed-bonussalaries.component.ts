@@ -16,7 +16,7 @@ export class ClosedBonussalariesComponent implements OnInit {
 	closedSalaries: Bonussalary[];
 
 	@ViewChild(MatTable) table: MatTable<Socialrecord>;
-	displayedColumns: string[] = [ 'sid', 'year', 'value', 'remarks' ];
+	displayedColumns: string[] = ['year', 'value', 'remarks' ];
 
 	constructor(private bonussalaryService: BonussalaryService, private userService: UserService) {
 	}

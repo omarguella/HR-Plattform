@@ -15,7 +15,7 @@ export class SalesmanComponent implements OnInit {
 	updatedValues: Salesman;
 
 	@ViewChild(MatTable) table: MatTable<Salesman>;
-	displayedColumns: string[] = [ 'code', 'firstname', 'lastname', 'department', 'action' ];
+	displayedColumns: string[] = [ 'sid', 'code', 'firstname', 'lastname', 'department', 'action' ];
 
 	newSalesman: Salesman;
 	hasError = false;

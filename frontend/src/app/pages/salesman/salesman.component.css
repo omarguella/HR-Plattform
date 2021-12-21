@@ -18,8 +18,8 @@ table th, table tr {
   text-align: center;
 }
 
-.mat-column-code {
-  width: 32px;
+.mat-column-sid {
+	max-width: 90px;
   border-right: 1px solid currentColor;
   padding-right: 24px;
   text-align: center;
