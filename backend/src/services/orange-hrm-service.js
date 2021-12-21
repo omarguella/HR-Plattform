@@ -29,7 +29,7 @@ exports.synchronizeSalesmen = async function (db) {
 		const salesman = new Salesman(
 			parseInt(s["employeeId"]),
 			parseInt(s["code"]),
-			s["firstName"],
+			s["firstName"] + (s["middleName"] ? " " + s["middleName"] : ""),
 			s["lastName"],
 			s["unit"]
 		);
