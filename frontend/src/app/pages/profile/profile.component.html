@@ -14,37 +14,39 @@
 						<div>
 							<mat-form-field>
 								<mat-label>Username</mat-label>
-								<input matInput type="text" (input)="handleChange()" [(ngModel)]="updatedValues.username"/>
+								<input [readonly]="user.role === ROLES.SALESMAN" matInput type="text" (input)="handleChange()"
+									[(ngModel)]="updatedValues.username" />
 							</mat-form-field>
 						</div>
 						<div>
 							<mat-form-field>
 								<mat-label>Firstname</mat-label>
-								<input matInput type="text" (input)="handleChange()" [(ngModel)]="updatedValues.firstname"/>
+								<input [readonly]="user.role === ROLES.SALESMAN" matInput type="text" (input)="handleChange()"
+									[(ngModel)]="updatedValues.firstname" />
 							</mat-form-field>
 							<mat-form-field>
 								<mat-label>Lastname</mat-label>
-								<input matInput type="text" (input)="handleChange()" [(ngModel)]="updatedValues.lastname"/>
+								<input [readonly]="user.role === ROLES.SALESMAN" matInput type="text" (input)="handleChange()"
+									[(ngModel)]="updatedValues.lastname" />
 							</mat-form-field>
 						</div>
 						<div>
 							<mat-form-field>
 								<mat-label>Email</mat-label>
-								<input matInput type="email" (input)="handleChange()" [(ngModel)]="updatedValues.email"/>
+								<input [readonly]="user.role === ROLES.SALESMAN" matInput type="email" (input)="handleChange()"
+									[(ngModel)]="updatedValues.email" />
 							</mat-form-field>
 							<mat-form-field class="example-form-field">
 								<mat-label>Role</mat-label>
-								<select matNativeControl (change)="handleChange()" [(ngModel)]="updatedValues.role">
+								<select [disable]="user.role === ROLES.SALESMAN" matNativeControl (change)="handleChange()"
+									[(ngModel)]="updatedValues.role">
 									<option value="ADMIN">ADMIN</option>
 									<option value="HR">HR</option>
 									<option value="SM">SALESMAN</option>
 								</select>
 							</mat-form-field>
 						</div>
-						<button
-							mat-raised-button
-							[disabled]="!isChanged"
-							(click)="saveChanges()"
+						<button mat-raised-button [disabled]="!isChanged || user.role === ROLES.SALESMAN" (click)="saveChanges()"
 							color="primary" class="actionBtn">
 							Save Changes
 						</button>
@@ -57,33 +59,46 @@
 					<h3 class="card-header">
 						Security
 					</h3>
-					<div class="card-body fields">
+					<div class="card-body fields" *ngIf="updatedValues">
 						<div>
 							<mat-form-field>
 								<mat-label>Old Password</mat-label>
-								<input matInput type="password" autocomplete="off"
-											 [(ngModel)]="oldPassword"/>
+								<input matInput type="password" autocomplete="off" [(ngModel)]="oldPassword" />
 							</mat-form-field>
 						</div>
 
 						<div>
 							<mat-form-field>
 								<mat-label>New Password</mat-label>
-								<input matInput type="password" autocomplete="off"
-											 [(ngModel)]="newPassword"/>
+								<input matInput type=" password" autocomplete="off" [(ngModel)]="newPassword" />
 							</mat-form-field>
 							<mat-form-field>
 								<mat-label>Confirm New Password</mat-label>
-								<input matInput type="password" autocomplete="off"
-											 [(ngModel)]="confirmNewPassword"/>
+								<input matInput type=" password" autocomplete="off" [(ngModel)]="confirmNewPassword" />
 							</mat-form-field>
 						</div>
 
-						<button mat-raised-button color="primary" class="actionBtn">Change Password</button>
+						<button mat-raised-button (click)="handleEditClick(element)" color="primary" class="actionBtn">Change
+							Password</button>
 					</div>
 				</div>
 			</div>
 
 		</div>
+	</div>
+</div>
+
+<div #updateModal class="modal__container">
+	<div class="card updateModal">
+		<h1>Are you sure to change your Password</h1>
+		<mat-divider></mat-divider>
+
+		<div class="modalBtn__container">
+			<button (click)="showCloseUpdateModal();" mat-button color="warn">Cancel</button>
+			<button mat-button color="primary" (click)="savePassword(); showCloseUpdateModal();">
+				Save
+			</button>
+		</div>
+
 	</div>
 </div>

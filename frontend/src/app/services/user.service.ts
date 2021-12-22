@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/User';
+import { Password } from '../models/Password';
 import { HttpClient } from '@angular/common/http';
 
 /**
@@ -42,4 +43,7 @@ export class UserService {
 		return this.http.put<User>(`${ this.baseUrl }/${ username }`, updatedValues, { observe: 'body', withCredentials: true });
 	}
 
+	updatePassword(username: string, passwordValues: Password): Observable<Password> {
+		return this.http.put<Password>(`${ this.baseUrl }/${ username }/{password}`, passwordValues, { observe: 'body', withCredentials: true });
+	}
 }
