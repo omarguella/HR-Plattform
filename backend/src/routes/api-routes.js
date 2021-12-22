@@ -3,7 +3,9 @@ const router = express.Router();
 const {
     checkAuthorization
 } = require('../middlewares/auth-middleware');
-const {ROLES} = require("../utils/globals");
+const {
+    ROLES
+} = require("../utils/globals");
 
 /*
     In this file is the routing for the REST-endpoints under /api managed
@@ -23,6 +25,8 @@ router.route("/user/:username")
     .get(checkAuthorization([ROLES.ADMIN]), userApi.getOne)
     .put(checkAuthorization([ROLES.ADMIN]), userApi.update)
     .delete(checkAuthorization([ROLES.ADMIN]), userApi.delete)
+router.route("/user/:username/password")
+    .put(checkAuthorization([ROLES.ADMIN]), userApi.updatePassword)
 
 const salesmanApi = require('../apis/salesman-api');
 router.route("/salesman")
