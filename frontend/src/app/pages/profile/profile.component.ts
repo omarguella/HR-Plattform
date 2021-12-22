@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../models/User';
-import { Password } from '../models/Password';
+import { Password } from '../../models/Password';
 import { UserService } from '../../services/user.service';
 
 
@@ -14,20 +14,21 @@ import { UserService } from '../../services/user.service';
 export class ProfileComponent implements OnInit {
 	user: User;
 	updatedValues: User;
-	passwords:Password;
 	isChanged = false;
 
 	oldPassword: string;
 	newPassword: string;
 	confirmNewPassword: string;
 
+	error = false;
+	success = false;
+	message = '';
+
 	ROLES = {
 		ADMIN: 'ADMIN',
 		HR: 'HR',
 		SALESMAN: 'SM'
 	};
-	
- //	@ViewChild('updateModal') updateModal: any;
 
 
 	constructor(private userService: UserService) {
@@ -66,25 +67,42 @@ export class ProfileComponent implements OnInit {
 			.subscribe();
 	}
 
-	/*showCloseUpdateModal(): void {
-		const modal = this.updateModal.nativeElement;
-		modal.classList.toggle('active');
+	savePassword(): void {
+		const passwords = new Password(this.oldPassword, this.newPassword);
+		this.userService
+			.updatePassword(this.user.username, passwords)
+			.subscribe(
+				data => {
+					this.success = true;
+					setTimeout(() => this.success = false, 3000);
+					this.message = 'Password changed successfully!';
+					this.clearFields();
+				},
+				error => {
+					this.error = true;
+					setTimeout(() => this.error = false, 3000);
+					this.message = 'Wrong Password';
+				}
+			);
 	}
 
-	handleEditClick(u: User): void {
-		if (this.newPassword===this.confirmNewPassword){
-		this.updatedValues = { ...u };
+	handleSavePasswordClick(): void {
+		if (this.newPassword !== this.confirmNewPassword) {
+			this.error = true;
+			this.message = 'Passwords do not match';
+			setTimeout(() => this.error = false, 3000);
+			return;
 		}
-		this.showCloseUpdateModal();
-	}*/
+		try {
+			this.savePassword();
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
-	savePassword(): void {
-		if (this.newPassword===this.confirmNewPassword){
-		this.passwords=new Password(this.oldPassword,this.newPassword);
-		this.userService
-			.updatePassword(this.user.username, this.passwords)
-			.subscribe();
-		} else{// FEHLER}
-		
+	clearFields(): void {
+		this.oldPassword = undefined;
+		this.newPassword = undefined;
+		this.confirmNewPassword = undefined;
 	}
 }

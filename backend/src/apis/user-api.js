@@ -162,7 +162,7 @@ exports.updatePassword = async function (req, res) {
 	try {
 		const _v = await userService.verify(db, Credentials);
 	} catch (error) {
-		res.status(404).json({
+		res.status(400).json({
 			message: error.message
 		});
 		return;

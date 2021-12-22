@@ -28,7 +28,7 @@ export class UserService {
 	}
 
 	getUserBySid(username: string): Observable<User> {
-		return this.http.get<User>(`${this.baseUrl}/${username}`, { observe: 'body', withCredentials: true });
+		return this.http.get<User>(`${ this.baseUrl }/${ username }`, { observe: 'body', withCredentials: true });
 	}
 
 	createUser(s: User): Observable<User> {
@@ -44,6 +44,6 @@ export class UserService {
 	}
 
 	updatePassword(username: string, passwordValues: Password): Observable<Password> {
-		return this.http.put<Password>(`${ this.baseUrl }/${ username }/{password}`, passwordValues, { observe: 'body', withCredentials: true });
+		return this.http.put<Password>(`${ this.baseUrl }/${ username }/password`, passwordValues, { observe: 'body', withCredentials: true });
 	}
 }

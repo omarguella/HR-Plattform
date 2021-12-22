@@ -26,7 +26,7 @@ router.route("/user/:username")
     .put(checkAuthorization([ROLES.ADMIN]), userApi.update)
     .delete(checkAuthorization([ROLES.ADMIN]), userApi.delete)
 router.route("/user/:username/password")
-    .put(checkAuthorization([ROLES.ADMIN]), userApi.updatePassword)
+    .put(userApi.updatePassword)
 
 const salesmanApi = require('../apis/salesman-api');
 router.route("/salesman")
