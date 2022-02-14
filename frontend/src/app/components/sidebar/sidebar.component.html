@@ -1,5 +1,5 @@
 <div class="sidenav">
-	<div class="menu-group" *ngIf="user && user.role === ROLES.ADMIN">
+	<div class="menu-group" *ngIf="user && ( user.role === ROLES.ADMIN || user.role === ROLES.HR)">
 		<button class="sidenav-menu-button" mat-raised-button>
 			Salesman Manager
 		</button>

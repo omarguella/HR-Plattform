@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Salesman } from '../../models/Salesman';
 import { MatTable } from '@angular/material/table';
 import { SalesmanService } from '../../services/salesman.service';
+import { User } from '../../models/User';
+import { UserService } from '../../services/user.service';
 
 @Component({
 	selector: 'app-salesman',
@@ -9,6 +11,13 @@ import { SalesmanService } from '../../services/salesman.service';
 	styleUrls: [ './salesman.component.css' ]
 })
 export class SalesmanComponent implements OnInit {
+	user: User;
+	ROLES = {
+		ADMIN: 'ADMIN',
+		HR: 'HR',
+		SALESMAN: 'SM'
+	};
+
 	salesmen: Salesman[] = [];
 
 	activeSalesman: Salesman; // the clicked salesman needed for the modal
@@ -24,10 +33,11 @@ export class SalesmanComponent implements OnInit {
 	@ViewChild('updateModal') updateModal: any;
 
 
-	constructor(private salesmanService: SalesmanService) {
+	constructor(private salesmanService: SalesmanService, private userService: UserService) {
 	}
 
 	ngOnInit(): void {
+		this.fetchUser();
 		this.getSalesman();
 		this.newSalesman = new Salesman(undefined, undefined, undefined, undefined, undefined);
 	}
@@ -105,5 +115,13 @@ export class SalesmanComponent implements OnInit {
 		this.activeSalesman = { ...s };
 		this.updatedValues = { ...s };
 		this.showCloseUpdateModal();
+	}
+
+	fetchUser(): void {
+		this.userService
+			.getOwnUser()
+			.subscribe(user => {
+				this.user = user;
+			});
 	}
 }
