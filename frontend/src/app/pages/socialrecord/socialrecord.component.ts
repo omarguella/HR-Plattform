@@ -154,11 +154,11 @@ export class SocialrecordComponent implements OnInit {
 		this.showCloseUpdateModal();
 	}
 
-	calculateBonus(a: number, b: number): number {
-		if (!a || !b) {
+	calculateBonus(targetValue: number, actualValue: number): number {
+		if (!targetValue || !actualValue) {
 			return 0;
 		}
-		return Math.round((b / a) * 50 + ((b - a) / 2) * 30);
+		return Math.round((actualValue / targetValue) * 50 + ((actualValue - targetValue) / 2) * 30);
 	}
 
 	clearFields(): void {
