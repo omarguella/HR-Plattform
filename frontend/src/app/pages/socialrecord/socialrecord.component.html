@@ -9,7 +9,7 @@
 			</div>
 		</div>
 		<div>
-			<button *ngIf="salesman" mat-raised-button routerLink="/bonussalary/{{sid}}">Add Bonussalary
+			<button *ngIf="salesman && user && user.role === ROLES.ADMIN" mat-raised-button routerLink="/bonussalary/{{sid}}">Add Bonussalary
 				for {{salesman.firstname + ' ' + salesman.lastname}}</button>
 		</div>
 	</div>

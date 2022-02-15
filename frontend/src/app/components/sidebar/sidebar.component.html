@@ -1,10 +1,10 @@
 <div class="sidenav">
-	<div class="menu-group" *ngIf="user && user.role === ROLES.ADMIN">
+	<div class="menu-group" *ngIf="user && ( user.role === ROLES.ADMIN || user.role === ROLES.HR)">
 		<button class="sidenav-menu-button" mat-raised-button>
 			Salesman Manager
 		</button>
 		<button class="sidenav-button arrow mb-4" color="primary" mat-flat-button routerLinkActive="active"
-						[routerLinkActiveOptions]="{exact: true}" routerLink="/salesman">
+			[routerLinkActiveOptions]="{exact: true}" routerLink="/salesman">
 			Salesmen
 		</button>
 	</div>
@@ -13,7 +13,7 @@
 			OrangeHRM
 		</button>
 		<button class="sidenav-button arrow mb-4" color="primary" mat-flat-button routerLinkActive="active"
-						[routerLinkActiveOptions]="{exact: true}" routerLink="/opensalaries">
+			[routerLinkActiveOptions]="{exact: true}" routerLink="/opensalaries">
 			Open Bonus Salaries
 		</button>
 	</div>
@@ -22,11 +22,11 @@
 			Performance
 		</button>
 		<button class="sidenav-button arrow" color="primary" mat-flat-button routerLinkActive="active"
-						[routerLinkActiveOptions]="{exact: true}" routerLink="/mysalaries">
+			[routerLinkActiveOptions]="{exact: true}" routerLink="/mysalaries">
 			Bonus Salaries
 		</button>
 		<button class="sidenav-button arrow" color="primary" mat-flat-button routerLinkActive="active"
-						[routerLinkActiveOptions]="{exact: true}" routerLink="/mysales">
+			[routerLinkActiveOptions]="{exact: true}" routerLink="/mysales">
 			My Sales
 		</button>
 	</div>
@@ -35,17 +35,16 @@
 			OpenCRX Overview
 		</button>
 		<button class="sidenav-button arrow" color="primary" mat-flat-button routerLinkActive="active"
-						[routerLinkActiveOptions]="{exact: true}" routerLink="/products">
+			[routerLinkActiveOptions]="{exact: true}" routerLink="/products">
 			Products
 		</button>
 		<button class="sidenav-button arrow" color="primary" mat-flat-button routerLinkActive="active"
-						[routerLinkActiveOptions]="{exact: true}" routerLink="/customers">
+			[routerLinkActiveOptions]="{exact: true}" routerLink="/customers">
 			Customers
 		</button>
-		<button *ngIf="user && (user.role === ROLES.ADMIN || user.role === ROLES.HR)"
-			class="sidenav-button arrow"
-			color="primary" mat-flat-button routerLinkActive="active"
-			[routerLinkActiveOptions]="{exact: true}" routerLink="/sales">
+		<button *ngIf="user && (user.role === ROLES.ADMIN || user.role === ROLES.HR)" class="sidenav-button arrow"
+			color="primary" mat-flat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+			routerLink="/sales">
 			Sales
 		</button>
 	</div>
@@ -55,14 +54,12 @@
 			User Manager
 		</button>
 		<button class="sidenav-button arrow" color="primary" mat-flat-button routerLinkActive="active"
-						[routerLinkActiveOptions]="{exact: true}" routerLink="/profile">
+			[routerLinkActiveOptions]="{exact: true}" routerLink="/profile">
 			Profile
 		</button>
-		<button class="sidenav-button arrow"
-						color="primary" mat-flat-button routerLinkActive="active"
-						[routerLinkActiveOptions]="{exact: true}" routerLink="/users">
+		<button class="sidenav-button arrow" color="primary" mat-flat-button
+			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/users">
 			Accounts
 		</button>
 	</div>
 </div>
-

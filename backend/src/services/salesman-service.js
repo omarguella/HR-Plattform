@@ -41,7 +41,9 @@ exports.update = async function (db, sid, salesman) {
 	const filter = {
 		"sid": sid
 	};
-	const newValues = {$set: salesman};
+	const newValues = {
+		$set: salesman
+	};
 
 	db.collection('salesmen').updateOne(
 		filter,
@@ -66,7 +68,3 @@ exports.delete = async function (db, sid) {
 	db.collection('salesmen').deleteOne(filter);
 
 }
-
-
-
-

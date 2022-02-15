@@ -5,6 +5,8 @@ import { SalesmanService } from '../../services/salesman.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { Salesman } from '../../models/Salesman';
+import { User } from '../../models/User';
+import { UserService } from '../../services/user.service';
 
 @Component({
 	selector: 'app-socialrecord',
@@ -12,6 +14,13 @@ import { Salesman } from '../../models/Salesman';
 	styleUrls: [ './socialrecord.component.css' ]
 })
 export class SocialrecordComponent implements OnInit {
+	user: User;
+	ROLES = {
+		ADMIN: 'ADMIN',
+		HR: 'HR',
+		SALESMAN: 'SM'
+	};
+
 	sid: number;
 	salesman: Salesman;
 	socialRecords: Socialrecord[] = [];
@@ -32,11 +41,13 @@ export class SocialrecordComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private socialRecordService: SocialRecordService,
-		private salesmanService: SalesmanService
+		private salesmanService: SalesmanService,
+		private userService: UserService
 	) {
 	}
 
 	ngOnInit(): void {
+		this.fetchUser();
 		this.sid = parseInt(this.route.snapshot.paramMap.get('sid'), 10);
 		this.newSocialRecord = new Socialrecord(
 			undefined,
@@ -143,11 +154,11 @@ export class SocialrecordComponent implements OnInit {
 		this.showCloseUpdateModal();
 	}
 
-	calculateBonus(a: number, b: number): number {
-		if (!a || !b) {
+	calculateBonus(targetValue: number, actualValue: number): number {
+		if (!targetValue || !actualValue) {
 			return 0;
 		}
-		return Math.round((b / a) * 50 + ((b - a) / 2) * 30);
+		return Math.round((actualValue / targetValue) * 50 + ((actualValue - targetValue) / 2) * 30);
 	}
 
 	clearFields(): void {
@@ -161,6 +172,14 @@ export class SocialrecordComponent implements OnInit {
 			undefined,
 			undefined
 		);
+	}
+
+	fetchUser(): void {
+		this.userService
+			.getOwnUser()
+			.subscribe(user => {
+				this.user = user;
+			});
 	}
 
 }

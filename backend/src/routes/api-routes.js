@@ -3,7 +3,9 @@ const router = express.Router();
 const {
     checkAuthorization
 } = require('../middlewares/auth-middleware');
-const {ROLES} = require("../utils/globals");
+const {
+    ROLES
+} = require("../utils/globals");
 
 /*
     In this file is the routing for the REST-endpoints under /api managed
@@ -23,27 +25,29 @@ router.route("/user/:username")
     .get(checkAuthorization([ROLES.ADMIN]), userApi.getOne)
     .put(checkAuthorization([ROLES.ADMIN]), userApi.update)
     .delete(checkAuthorization([ROLES.ADMIN]), userApi.delete)
+router.route("/user/:username/password")
+    .put(userApi.updatePassword)
 
 const salesmanApi = require('../apis/salesman-api');
 router.route("/salesman")
-    .get(checkAuthorization([ROLES.ADMIN]), salesmanApi.getAll)
-    .post(checkAuthorization([ROLES.ADMIN]), salesmanApi.create)
+    .get(checkAuthorization([ROLES.ADMIN, ROLES.HR]), salesmanApi.getAll)
+    .post(checkAuthorization([ROLES.ADMIN, ROLES.HR]), salesmanApi.create)
 router.route("/salesman/:sid")
-    .get(checkAuthorization([ROLES.ADMIN]), salesmanApi.getBySid)
-    .put(checkAuthorization([ROLES.ADMIN]), salesmanApi.updateBySid)
-    .delete(checkAuthorization([ROLES.ADMIN]), salesmanApi.deleteBySid)
+    .get(checkAuthorization([ROLES.ADMIN, ROLES.HR]), salesmanApi.getBySid)
+    .put(checkAuthorization([ROLES.ADMIN, ROLES.HR]), salesmanApi.updateBySid)
+    .delete(checkAuthorization([ROLES.ADMIN, ROLES.HR]), salesmanApi.deleteBySid)
 
 const socialRecordApi = require('../apis/socialRecord-api');
 router.route("/socialrecord")
-    .get(checkAuthorization([ROLES.ADMIN]), socialRecordApi.getAll)
-    .post(checkAuthorization([ROLES.ADMIN]), socialRecordApi.create)
+    .get(checkAuthorization([ROLES.ADMIN, ROLES.HR]), socialRecordApi.getAll)
+    .post(checkAuthorization([ROLES.ADMIN, ROLES.HR]), socialRecordApi.create)
 router.route("/socialrecord/:id")
-    .get(checkAuthorization([ROLES.ADMIN]), socialRecordApi.getById)
-    .put(checkAuthorization([ROLES.ADMIN]), socialRecordApi.update)
-    .delete(checkAuthorization([ROLES.ADMIN]), socialRecordApi.deleteById)
+    .get(checkAuthorization([ROLES.ADMIN, ROLES.HR]), socialRecordApi.getById)
+    .put(checkAuthorization([ROLES.ADMIN, ROLES.HR]), socialRecordApi.update)
+    .delete(checkAuthorization([ROLES.ADMIN, ROLES.HR]), socialRecordApi.deleteById)
 router.route("/socialrecord/:sid/:year")
-    .get(checkAuthorization([ROLES.ADMIN]), socialRecordApi.getBySidAndYear)
-    .delete(checkAuthorization([ROLES.ADMIN]), socialRecordApi.deleteBySidAndYear)
+    .get(checkAuthorization([ROLES.ADMIN, ROLES.HR]), socialRecordApi.getBySidAndYear)
+    .delete(checkAuthorization([ROLES.ADMIN, ROLES.HR]), socialRecordApi.deleteBySidAndYear)
 
 const orangeHrmApi = require('../apis/orange-hrm-api');
 router.route('/orangehrm')

@@ -15,7 +15,7 @@
 			</ng-container>
 			<ng-container matColumnDef="firstname">
 				<th mat-header-cell *matHeaderCellDef> Firstname</th>
-				<td mat-cell *matCellDef="let element">{{element["firstname"]}} </td>
+				<td mat-cell *matCellDef="let element">{{element["firstname"]}}</td>
 			</ng-container>
 			<ng-container matColumnDef="lastname">
 				<th mat-header-cell *matHeaderCellDef> Lastname</th>
@@ -35,7 +35,7 @@
 					<button routerLink="/socialrecord/{{element['sid']}}" mat-raised-button color="accent"
 									class="actionBtn">Social Records
 					</button>
-					<button routerLink="/bonussalary/{{element['sid']}}" mat-raised-button>Bonus Salary</button>
+					<button *ngIf="user && user.role === ROLES.ADMIN " routerLink="/bonussalary/{{element['sid']}}" mat-raised-button>Bonus Salary</button>
 				</td>
 			</ng-container>
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

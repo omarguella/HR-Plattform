@@ -1,17 +1,29 @@
 const axios = require("axios");
-const {ORANGE_BASE_URL, authenticate} = require("../models/orangeHRM/OrangeHrmConfig");
+const {
+	ORANGE_BASE_URL,
+	authenticate
+} = require("../models/orangeHRM/OrangeHrmConfig");
 const salesmanService = require("../services/salesman-service");
 const Salesman = require("../models/Salesman");
 const FormData = require('form-data');
-const {COLLECTIONS} = require("../utils/globals");
+const {
+	COLLECTIONS
+} = require("../utils/globals");
 
 exports.getSalesmenFromOrange = async function () {
 	try {
 		const employees = await axios.get(
-			`${ORANGE_BASE_URL}/symfony/web/index.php/api/v1/employee/search`,
-			{headers: {Authorization: `Bearer ${await authenticate()}`}}
+			`${ORANGE_BASE_URL}/symfony/web/index.php/api/v1/employee/search`, {
+				headers: {
+					Authorization: `Bearer ${await authenticate()}`
+				}
+			}
 		);
-		const {data: {data}} = employees;
+		const {
+			data: {
+				data
+			}
+		} = employees;
 		return data.filter((e) => e.unit === 'Sales');
 	} catch (error) {
 		console.log(error);
@@ -51,7 +63,10 @@ exports.synchronizeSalesmen = async function (db) {
  * @return {Promise<Bonussalary[]>}
  */
 exports.getAll = async function (db) {
-	return await db.collection(COLLECTIONS.BONUSSALARIES).find().sort({sid: 1, year: 1}).toArray();
+	return await db.collection(COLLECTIONS.BONUSSALARIES).find().sort({
+		sid: 1,
+		year: 1
+	}).toArray();
 }
 
 /**
@@ -61,7 +76,12 @@ exports.getAll = async function (db) {
  * @return {Promise<Bonussalary[]>}
  */
 exports.getAllBySid = async function (db, sid) {
-	return await db.collection(COLLECTIONS.BONUSSALARIES).find({sid: sid}).sort({sid: 1, year: 1}).toArray();
+	return await db.collection(COLLECTIONS.BONUSSALARIES).find({
+		sid: sid
+	}).sort({
+		sid: 1,
+		year: 1
+	}).toArray();
 }
 
 /**
@@ -96,8 +116,7 @@ exports.confirmBonussalary = async function (sid, year, value) {
 	try {
 		await axios.post(
 			`${ORANGE_BASE_URL}/symfony/web/index.php/api/v1/employee/${sid}/bonussalary`,
-			formData,
-			{
+			formData, {
 				headers: {
 					'Authorization': `Bearer ${await authenticate()}`,
 					...formData.getHeaders()
@@ -130,7 +149,9 @@ exports.updateBonussalary = async function (db, bonussalary) {
 		"sid": bonussalary.sid,
 		"year": bonussalary.year
 	};
-	const newValues = {$set: bonussalary};
+	const newValues = {
+		$set: bonussalary
+	};
 
 	db.collection(COLLECTIONS.BONUSSALARIES).updateOne(
 		filter,

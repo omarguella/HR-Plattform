@@ -1,5 +1,7 @@
 const userService = require('../services/user-service');
 const user = require("../models/User");
+const Credentials = require("../models/Credentials");
+
 
 /**
  * endpoint, which returns information about the user, which is currently authenticated
@@ -85,7 +87,9 @@ exports.create = async function (req, res) {
 		});
 	} else {
 		await userService.add(db, newUser);
-		res.status(201).json({message: `created User with username ${newUser.username}`});
+		res.status(201).json({
+			message: `created User with username ${newUser.username}`
+		});
 	}
 
 	// #swagger.tags = ['User']
@@ -124,8 +128,8 @@ exports.update = async function (req, res) {
 	const username = req.params.username;
 	const db = req.app.get('db');
 	const updatedValues = req.body;
-	delete (updatedValues._id); // prevent updating the _id property
-	delete (updatedValues.password);
+	delete(updatedValues._id); // prevent updating the _id property
+	delete(updatedValues.password);
 
 	const _u = await userService.get(db, username);
 	if (!_u) {
@@ -142,3 +146,32 @@ exports.update = async function (req, res) {
 }
 
 
+/**
+ * endpoint, to update User by his unique username
+ * @param req express request
+ * @param res express response
+ * @return {Promise<void>}
+ */
+exports.updatePassword = async function (req, res) {
+	Credentials.username = req.params.username;
+	Credentials.password = req.body.oldPassword;
+
+	const db = req.app.get('db');
+	const newPassword = req.body.newPassword;
+
+	try {
+		const _v = await userService.verify(db, Credentials);
+	} catch (error) {
+		res.status(400).json({
+			message: error.message
+		});
+		return;
+	}
+
+	await userService.updatePassword(db, Credentials.username, newPassword);
+	res.status(200).json({
+		message: 'Password is changed'
+	});
+
+	// #swagger.tags = ['User']
+}

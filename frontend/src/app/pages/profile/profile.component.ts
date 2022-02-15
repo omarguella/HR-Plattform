@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../models/User';
+import { Password } from '../../models/Password';
 import { UserService } from '../../services/user.service';
+
 
 @Component({
 	selector: 'app-profile',
 	templateUrl: './profile.component.html',
 	styleUrls: [ './profile.component.css' ]
 })
+
+
 export class ProfileComponent implements OnInit {
 	user: User;
 	updatedValues: User;
@@ -15,6 +19,17 @@ export class ProfileComponent implements OnInit {
 	oldPassword: string;
 	newPassword: string;
 	confirmNewPassword: string;
+
+	error = false;
+	success = false;
+	message = '';
+
+	ROLES = {
+		ADMIN: 'ADMIN',
+		HR: 'HR',
+		SALESMAN: 'SM'
+	};
+
 
 	constructor(private userService: UserService) {
 	}
@@ -53,6 +68,41 @@ export class ProfileComponent implements OnInit {
 	}
 
 	savePassword(): void {
+		const passwords = new Password(this.oldPassword, this.newPassword);
+		this.userService
+			.updatePassword(this.user.username, passwords)
+			.subscribe(
+				data => {
+					this.success = true;
+					setTimeout(() => this.success = false, 3000);
+					this.message = 'Password changed successfully!';
+					this.clearFields();
+				},
+				error => {
+					this.error = true;
+					setTimeout(() => this.error = false, 3000);
+					this.message = 'Wrong Password';
+				}
+			);
+	}
 
+	handleSavePasswordClick(): void {
+		if (this.newPassword !== this.confirmNewPassword) {
+			this.error = true;
+			this.message = 'Passwords do not match';
+			setTimeout(() => this.error = false, 3000);
+			return;
+		}
+		try {
+			this.savePassword();
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	clearFields(): void {
+		this.oldPassword = undefined;
+		this.newPassword = undefined;
+		this.confirmNewPassword = undefined;
 	}
 }

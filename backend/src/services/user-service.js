@@ -45,9 +45,12 @@ exports.getAll = async function (db) {
  */
 exports.update = async function (db, username, user) {
 
+
     const filter = {
         "username": username
     };
+
+
 
     const newValues = {
         $set: user
@@ -61,6 +64,38 @@ exports.update = async function (db, username, user) {
         });
 }
 
+
+/**
+ * updates a unique user by uid
+ * @param db target database
+ * @param {string} username
+ * @param {string} password
+ * @return {Promise<User>}
+ */
+
+
+exports.updatePassword = async function (db, username, password) {
+
+
+    const filter = {
+        "username": username
+    };
+
+
+    const hashPass = hashPassword(password);
+
+
+    const newValues = {
+        $set: {
+            password: hashPass
+        }
+    };
+
+    db.collection('users').updateOne(
+        filter,
+        newValues,
+    );
+}
 
 
 /**
